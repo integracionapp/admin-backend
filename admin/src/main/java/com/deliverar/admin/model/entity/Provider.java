@@ -9,7 +9,11 @@ import javax.persistence.*;
 import java.math.BigInteger;
 import java.util.List;
 
-@Entity @Getter @Setter @AllArgsConstructor @NoArgsConstructor
+@Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Provider {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

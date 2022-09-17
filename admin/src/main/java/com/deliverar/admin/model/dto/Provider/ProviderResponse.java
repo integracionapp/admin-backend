@@ -4,7 +4,11 @@ import lombok.*;
 
 import java.math.BigInteger;
 
-@Getter @Setter @AllArgsConstructor @NoArgsConstructor @Builder
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class ProviderResponse {
 
     private Long id;

@@ -20,6 +20,6 @@ public class ProviderController {
 
     @PostMapping("/")
     public ResponseEntity<ProviderResponse> save(@RequestBody ProviderRequest providerRequest){
-        return new ResponseEntity(providerService.saveNewProvider(providerRequest), HttpStatus.OK);
+        return new ResponseEntity<>(providerService.saveNewProvider(providerRequest), HttpStatus.OK);
     }
 }
