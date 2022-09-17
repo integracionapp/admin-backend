@@ -7,6 +7,7 @@
         <artifactId>administrator</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
+    <packaging>jar</packaging>
     <artifactId>admin</artifactId>
     <name>admin</name>
     <description>admin</description>

@@ -7,30 +7,28 @@ import com.deliverar.admin.model.entity.Provider;
 import com.deliverar.admin.repository.ProviderRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
 @Slf4j
+@Transactional
 public class ProviderServiceImpl implements ProviderService {
 
     @Autowired
     private ProviderRepository providerRepository;
 
-    @Autowired
-    private ProviderMapper providerMapper;
-
     @Override
     public ProviderResponse saveNewProvider(ProviderRequest p) {
-
         //Mapper to the entity
-
+        Provider provider = ProviderMapper.INSTANCE.providerRequestToProvider(p);
         //Logic
-
+        provider = providerRepository.save(provider);
         //Mapper to the response
-        return null;
+        ProviderResponse providerResponse = ProviderMapper.INSTANCE.ProviderToProviderResponse(provider);
+        return providerResponse;
     }
 
     @Override
