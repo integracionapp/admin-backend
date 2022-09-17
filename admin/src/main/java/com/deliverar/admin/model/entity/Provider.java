@@ -5,14 +5,25 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.math.BigInteger;
+import java.util.List;
 
 @Entity @Getter @Setter @AllArgsConstructor @NoArgsConstructor
 public class Provider {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private String businessName;
+    private BigInteger cuit;
+    private String phone;
+    private String email;
+
+    @OneToMany(mappedBy = "provider", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Address> address;
+    private String webPageUrl;
+
+
+
 }
