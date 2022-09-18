@@ -1,7 +1,7 @@
 package com.deliverar.admin.model.dto.Provider;
 
 import com.deliverar.admin.model.dto.Address.AddressRequest;
-import com.deliverar.admin.model.entity.Address;
+import com.deliverar.admin.model.dto.Address.AddressResponse;
 import lombok.*;
 
 import java.math.BigInteger;
@@ -12,8 +12,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ProviderRequest {
+public class ProviderUpdateRequest {
 
+    private Long id;
     private String businessName;
     private BigInteger cuit;
     private String phone;
