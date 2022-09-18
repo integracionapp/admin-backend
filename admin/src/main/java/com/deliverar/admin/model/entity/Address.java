@@ -4,11 +4,11 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@Embeddable @Getter @Setter @AllArgsConstructor @NoArgsConstructor @Builder
+@Entity @Getter @Setter @AllArgsConstructor @NoArgsConstructor @Builder
 public class Address {
 
-    /*@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;*/
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String street;
     private Integer number;
@@ -17,8 +17,4 @@ public class Address {
     private String zipCode;
     private String city;
     private String province;
-
-    /*@ManyToOne
-    @JoinColumn(name = "provider_id")
-    private Provider provider;*/
 }

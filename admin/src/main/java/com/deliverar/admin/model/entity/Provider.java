@@ -24,12 +24,8 @@ public class Provider {
     private String phone;
     private String email;
 
-    //@OneToMany(mappedBy = "provider", cascade = CascadeType.ALL, orphanRemoval = true)
-    @ElementCollection
-    @CollectionTable(
-            name="ADDRESS",
-            joinColumns=@JoinColumn(name="ADDRESS_ID")
-    )
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "provider_id")
     private List<Address> address;
     private String webPageUrl;
 

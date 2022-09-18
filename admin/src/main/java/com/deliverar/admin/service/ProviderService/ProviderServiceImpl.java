@@ -20,10 +20,12 @@ public class ProviderServiceImpl implements ProviderService {
     @Autowired
     private ProviderRepository providerRepository;
 
+    private final ProviderMapper providerMapper = ProviderMapper.INSTANCE;
+
     @Override
     public ProviderResponse saveNewProvider(ProviderRequest p) {
         //Mapper to the entity
-        Provider provider = ProviderMapper.INSTANCE.providerRequestToProvider(p);
+        Provider provider = providerMapper.providerRequestToProvider(p);
         //Logic
         provider = providerRepository.save(provider);
         //Mapper to the response
