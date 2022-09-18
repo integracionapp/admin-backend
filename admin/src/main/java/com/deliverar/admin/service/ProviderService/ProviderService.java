@@ -6,6 +6,7 @@ import com.deliverar.admin.model.dto.Provider.ProviderResponse;
 import com.deliverar.admin.model.dto.Provider.ProviderUpdateRequest;
 import com.deliverar.admin.model.entity.Provider;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface ProviderService {
