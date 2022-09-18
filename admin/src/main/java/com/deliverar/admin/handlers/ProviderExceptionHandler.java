@@ -12,6 +12,15 @@ import java.time.LocalDateTime;
 @ControllerAdvice
 public class ProviderExceptionHandler {
 
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ExceptionResponse> handleException(Exception e){
+        ExceptionResponse ex = ExceptionResponse.builder()
+                .message(e.getMessage())
+                .timestamp(LocalDateTime.now())
+                .build();
+        return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
     @ExceptionHandler(ProviderNotFoundException.class)
     public ResponseEntity<ExceptionResponse> handleProviderNotFoundException(ProviderNotFoundException p){
         ExceptionResponse ex = ExceptionResponse.builder()
