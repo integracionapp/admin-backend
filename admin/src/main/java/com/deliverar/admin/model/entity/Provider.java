@@ -24,7 +24,12 @@ public class Provider {
     private String phone;
     private String email;
 
-    @OneToMany(mappedBy = "provider", cascade = CascadeType.ALL, orphanRemoval = true)
+    //@OneToMany(mappedBy = "provider", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ElementCollection
+    @CollectionTable(
+            name="ADDRESS",
+            joinColumns=@JoinColumn(name="ADDRESS_ID")
+    )
     private List<Address> address;
     private String webPageUrl;
 
