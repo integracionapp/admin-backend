@@ -1,15 +1,16 @@
 package com.deliverar.admin.controller;
 
+import com.deliverar.admin.exceptions.ProviderNotFoundException;
 import com.deliverar.admin.model.dto.Provider.ProviderRequest;
 import com.deliverar.admin.model.dto.Provider.ProviderResponse;
+import com.deliverar.admin.model.dto.Provider.ProviderUpdateRequest;
 import com.deliverar.admin.service.ProviderService.ProviderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/provider")
@@ -22,4 +23,27 @@ public class ProviderController {
     public ResponseEntity<ProviderResponse> save(@RequestBody ProviderRequest providerRequest){
         return new ResponseEntity<>(providerService.saveNewProvider(providerRequest), HttpStatus.OK);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ProviderResponse> findProviderById(@PathVariable Long id) throws ProviderNotFoundException {
+        return new ResponseEntity<>(providerService.getProviderResponseById(id), HttpStatus.OK);
+    }
+
+    @PutMapping("/")
+    public ResponseEntity<ProviderResponse> update(@RequestBody ProviderUpdateRequest providerRequest){
+        return new ResponseEntity<>(providerService.update(providerRequest), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteProviderById(@PathVariable Long id) {
+        providerService.delete(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<List<ProviderResponse>> getAllProviders(){
+        return new ResponseEntity<>(providerService.getAllProviders(), HttpStatus.OK);
+    }
+
+
 }
