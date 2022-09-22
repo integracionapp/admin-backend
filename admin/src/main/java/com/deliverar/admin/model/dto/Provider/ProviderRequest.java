@@ -2,22 +2,37 @@ package com.deliverar.admin.model.dto.Provider;
 
 import com.deliverar.admin.model.dto.Address.AddressRequest;
 import com.deliverar.admin.model.entity.Address;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.Range;
 
+import javax.validation.constraints.*;
 import java.math.BigInteger;
 import java.util.List;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
+@Getter @Setter @AllArgsConstructor @NoArgsConstructor @Builder @Schema(name = "ProviderRequest")
 public class ProviderRequest {
 
+    @Schema(description = "Business Name", example = "Marolio", required = true)
+    @NotBlank(message = "Business Name is required")
     private String businessName;
+
+    @Schema(description = "CUIT", example = "27280335148", required = true)
+    @Range(min = 00000000000, max = 99999999999L, message = "CUIT must have 11 digits") //TODO Check
     private BigInteger cuit;
+
+    @Schema(description = "Contact phone", example = "4268-0214", required = true)
+    @NotBlank(message = "Phone Number is required")
     private String phone;
+
+    @Schema(description = "Contact Email Address", example = "example@gmail.com", required = true)
+    @Email(message = "Use a Valid Email")
     private String email;
+
+    @Schema(description = "Website URL", example = "www.example.com")
     private String webPageUrl;
+
+    @Schema(description = "List of Provider address", required = true)
     private List<AddressRequest> addresses;
 }

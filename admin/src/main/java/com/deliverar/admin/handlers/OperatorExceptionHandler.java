@@ -12,15 +12,6 @@ import java.time.LocalDateTime;
 @ControllerAdvice
 public class OperatorExceptionHandler {
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ExceptionResponse> handleException(Exception e) {
-        ExceptionResponse ex = ExceptionResponse.builder()
-                .message(e.getMessage())
-                .timestamp(LocalDateTime.now())
-                .build();
-        return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
     @ExceptionHandler(OperatorNotFoundException.class)
     public ResponseEntity<ExceptionResponse> handleOperatorNotFoundException(OperatorNotFoundException p) {
         ExceptionResponse ex = ExceptionResponse.builder()
