@@ -2,6 +2,7 @@ package com.deliverar.admin.mappers;
 
 import com.deliverar.admin.model.dto.Franchise.FranchiseRequest;
 import com.deliverar.admin.model.dto.Franchise.FranchiseResponse;
+import com.deliverar.admin.model.dto.Franchise.FranchiseUpdateRequest;
 import com.deliverar.admin.model.entity.Franchise;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -17,4 +18,7 @@ public interface FranchiseMapper {
 
     @Mapping(source = "franchise.address", target = "addresses")
     FranchiseResponse franchiseToFranchiseResponse(Franchise franchise);
+
+    @Mapping(source = "franchiseUpdateRequest.addresses", target = "address")
+    Franchise franchiseUpdateRequestToFranchise(FranchiseUpdateRequest franchiseUpdateRequest);
 }
