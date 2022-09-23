@@ -4,9 +4,12 @@ import com.deliverar.admin.model.dto.Franchise.FranchiseRequest;
 import com.deliverar.admin.model.dto.Franchise.FranchiseResponse;
 import com.deliverar.admin.model.dto.Franchise.FranchiseUpdateRequest;
 import com.deliverar.admin.model.entity.Franchise;
+import jdk.dynalink.linker.LinkerServices;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
+
+import java.util.List;
 
 @Mapper
 public interface FranchiseMapper {
@@ -21,4 +24,7 @@ public interface FranchiseMapper {
 
     @Mapping(source = "franchiseUpdateRequest.addresses", target = "address")
     Franchise franchiseUpdateRequestToFranchise(FranchiseUpdateRequest franchiseUpdateRequest);
+
+    @Mapping(source = "franchiseList.address",target = "addresses")
+    List<FranchiseResponse> franchiseToFranchiseResponse(List<Franchise> franchiseList);
 }

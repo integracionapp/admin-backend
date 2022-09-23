@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/franchise")
 public class FranchiseController {
@@ -31,6 +33,16 @@ public class FranchiseController {
     public ResponseEntity deleteById(@PathVariable Long id){
         franchiseService.deleteById(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<FranchiseResponse> getFranchiseById(@PathVariable Long id){
+        return new ResponseEntity<>(franchiseService.getFranchiseResponseById(id),HttpStatus.OK);
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<List<FranchiseResponse>> getAllFranchises(){
+        return new ResponseEntity<>(franchiseService.getAllFranchises(),HttpStatus.OK);
     }
 
 

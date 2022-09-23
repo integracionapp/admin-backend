@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Slf4j
 @Transactional //preguntar para que es
@@ -54,6 +56,17 @@ public class FranchiseServiceImpl implements FranchiseService{
     public Franchise findById(Long id) {
         return franchiseRepository.findById(id)
                 .orElseThrow(()-> new FranchiseNotFoundException("Franchise not found with ID "+ id));
+    }
+
+    @Override
+    public FranchiseResponse getFranchiseResponseById(Long id) throws FranchiseNotFoundException {
+        Franchise franchise = this.findById(id);
+        return  franchiseMapper.franchiseToFranchiseResponse(franchise);
+    }
+
+    @Override
+    public List<FranchiseResponse> getAllFranchises() {
+        return franchiseMapper.franchiseToFranchiseResponse(franchiseRepository.findAll());
     }
 
 
