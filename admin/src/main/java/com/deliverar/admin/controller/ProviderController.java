@@ -47,7 +47,7 @@ public class ProviderController {
 
     @PutMapping("/")
     @Operation(summary = "Update a Provider", description = "Update an existing provider")
-    public ResponseEntity<ProviderResponse> update(@RequestBody ProviderUpdateRequest providerRequest){
+    public ResponseEntity<ProviderResponse> update(@Valid @RequestBody ProviderUpdateRequest providerRequest){
         return new ResponseEntity<>(providerService.update(providerRequest), HttpStatus.OK);
     }
 
