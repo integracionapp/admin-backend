@@ -1,6 +1,7 @@
 package com.deliverar.admin.model.dto.Provider;
 
 import com.deliverar.admin.model.dto.Address.AddressResponse;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 import java.math.BigInteger;
