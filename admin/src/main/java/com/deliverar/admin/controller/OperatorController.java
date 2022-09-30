@@ -1,6 +1,6 @@
 package com.deliverar.admin.controller;
 
-import com.deliverar.admin.exceptions.ProviderNotFoundException;
+import com.deliverar.admin.exceptions.OperatorNotFoundException;
 import com.deliverar.admin.model.dto.ExceptionResponse;
 import com.deliverar.admin.model.dto.Operator.OperatorRequest;
 import com.deliverar.admin.model.dto.Operator.OperatorResponse;
@@ -40,7 +40,7 @@ public class OperatorController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Get an Operator by ID")
-    public ResponseEntity<OperatorResponse> findProviderById(@PathVariable Long id) throws ProviderNotFoundException {
+    public ResponseEntity<OperatorResponse> findOperatorById(@PathVariable Long id) throws OperatorNotFoundException {
         return new ResponseEntity<>(operatorService.getOperatorResponseById(id), HttpStatus.OK);
     }
 
@@ -52,14 +52,14 @@ public class OperatorController {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete an Operator")
-    public ResponseEntity deleteProviderById(@PathVariable Long id) {
+    public ResponseEntity deleteOperatorById(@PathVariable Long id) {
         operatorService.delete(id);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/")
     @Operation(summary = "Get all Operators")
-    public ResponseEntity<List<OperatorResponse>> getAllProviders() {
+    public ResponseEntity<List<OperatorResponse>> getAllOperators() {
         return new ResponseEntity<>(operatorService.getAllOperators(), HttpStatus.OK);
     }
 }

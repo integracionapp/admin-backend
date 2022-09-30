@@ -1,7 +1,6 @@
 package com.deliverar.admin.service.OperatorService;
 
 import com.deliverar.admin.exceptions.OperatorNotFoundException;
-import com.deliverar.admin.exceptions.ProviderNotFoundException;
 import com.deliverar.admin.mappers.OperatorMapper;
 import com.deliverar.admin.model.dto.Operator.OperatorRequest;
 import com.deliverar.admin.model.dto.Operator.OperatorResponse;
@@ -48,7 +47,7 @@ public class OperatorServiceImpl implements OperatorService {
         log.info("Deleting Operator with ID {}", id);
         Operator operator = this.findById(id);
         operatorRepository.delete(operator);
-        log.info("Deleting (ID {}) deleted successfully");
+        log.info("Operator (ID {}) deleted successfully", id);
     }
 
     @Override
@@ -64,8 +63,8 @@ public class OperatorServiceImpl implements OperatorService {
     }
 
     @Override
-    public OperatorResponse getOperatorResponseById(Long id) throws ProviderNotFoundException {
-        log.info("Getting operator with id", id);
+    public OperatorResponse getOperatorResponseById(Long id) throws OperatorNotFoundException {
+        log.info("Getting operator with ID {}", id);
         Operator operator = this.findById(id);
         log.info("Operator found with ID {}", id);
         return operatorMapper.operatorToOperatorResponse(operator);
