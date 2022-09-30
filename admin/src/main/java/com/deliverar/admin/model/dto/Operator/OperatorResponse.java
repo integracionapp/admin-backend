@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.math.BigInteger;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -22,6 +23,6 @@ public class OperatorResponse {
     private String email;
     private Date birthDate;
     private Date registerDate;
-    private AddressResponse address;
+    private List<AddressResponse> addresses;
 
 }
