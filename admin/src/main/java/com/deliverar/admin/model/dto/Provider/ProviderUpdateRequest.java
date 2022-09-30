@@ -2,6 +2,7 @@ package com.deliverar.admin.model.dto.Provider;
 
 import com.deliverar.admin.model.dto.Address.AddressRequest;
 import com.deliverar.admin.model.dto.Address.AddressResponse;
+import com.deliverar.admin.model.dto.Address.AddressUpdateRequest;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import org.hibernate.validator.constraints.Range;
@@ -40,5 +41,5 @@ public class ProviderUpdateRequest {
     private String webPageUrl;
 
     @Schema(description = "List of Provider address", required = true)
-    private List<AddressRequest> addresses;
+    private List<AddressUpdateRequest> addresses;
 }
