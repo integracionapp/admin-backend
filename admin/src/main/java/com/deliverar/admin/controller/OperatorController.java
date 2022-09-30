@@ -26,7 +26,7 @@ import java.util.List;
         @ApiResponse(responseCode = "404", description = "Operator not found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class)))
 })
-@Tag(name = "Operator API", description = "Operator API deveoped by Deliver.ar Administrator")
+@Tag(name = "Operator API", description = "Operator API developed by Deliver.ar Administrator")
 public class OperatorController {
 
     @Autowired
