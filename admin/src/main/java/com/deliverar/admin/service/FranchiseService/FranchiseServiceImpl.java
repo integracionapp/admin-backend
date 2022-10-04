@@ -69,5 +69,10 @@ public class FranchiseServiceImpl implements FranchiseService{
         return franchiseMapper.franchiseToFranchiseResponse(franchiseRepository.findAll());
     }
 
+    @Override
+    public List<FranchiseResponse> getFranchisesByName(String name) {
+        return franchiseMapper.franchiseToFranchiseResponse(franchiseRepository.findByNameContaining(name));
+    }
+
 
 }

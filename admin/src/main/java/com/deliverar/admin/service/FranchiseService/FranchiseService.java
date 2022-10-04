@@ -16,4 +16,6 @@ public interface FranchiseService {
     Franchise findById(Long id);
     FranchiseResponse getFranchiseResponseById(Long id) throws FranchiseNotFoundException;
     List<FranchiseResponse> getAllFranchises();
+    List<FranchiseResponse> getFranchisesByName(String name);
+
 }

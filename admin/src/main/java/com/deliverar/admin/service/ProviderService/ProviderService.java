@@ -17,4 +17,6 @@ public interface ProviderService {
     List<ProviderResponse> getAllProviders();
     Provider findById(Long id);
     ProviderResponse getProviderResponseById(Long id) throws ProviderNotFoundException;
+    List<ProviderResponse> getProvidersByName(String name);
+
 }

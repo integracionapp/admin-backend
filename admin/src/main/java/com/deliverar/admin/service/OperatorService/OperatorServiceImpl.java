@@ -69,4 +69,9 @@ public class OperatorServiceImpl implements OperatorService {
         log.info("Operator found with ID {}", id);
         return operatorMapper.operatorToOperatorResponse(operator);
     }
+
+    @Override
+    public List<OperatorResponse> getOperatorsByLastName(String lastName) {
+        return operatorMapper.operatorToOperatorResponse(operatorRepository.findByLastNameContaining(lastName));
+    }
 }

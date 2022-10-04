@@ -71,4 +71,10 @@ public class ProviderServiceImpl implements ProviderService {
         log.info("Provider found with ID {}", id);
         return providerMapper.providerToProviderResponse(p);
     }
+
+    @Override
+    public List<ProviderResponse> getProvidersByName(String name) {
+        return providerMapper.providerToProviderResponse(providerRepository.findByBusinessNameContaining(name));
+    }
+
 }

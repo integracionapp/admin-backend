@@ -21,4 +21,7 @@ public interface OperatorService {
     Operator findById(Long id);
 
     OperatorResponse getOperatorResponseById(Long id) throws OperatorNotFoundException;
+
+    List<OperatorResponse> getOperatorsByLastName(String lastName);
+
 }

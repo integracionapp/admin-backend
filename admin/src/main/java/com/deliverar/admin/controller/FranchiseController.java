@@ -66,5 +66,11 @@ public class FranchiseController {
         return new ResponseEntity<>(franchiseService.getAllFranchises(),HttpStatus.OK);
     }
 
+    @GetMapping("/find/{name}")
+    @Operation(summary = "Find a list of Franchises by name", description = "Find a list of Franchises by name")
+    public ResponseEntity<List<FranchiseResponse>> getFranchisesByName(@PathVariable String name){
+        return new ResponseEntity<>(franchiseService.getFranchisesByName(name), HttpStatus.OK);
+    }
+
 
 }
