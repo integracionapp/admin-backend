@@ -6,6 +6,7 @@ import com.deliverar.admin.model.dto.Operator.OperatorUpdateRequest;
 import com.deliverar.admin.model.entity.Operator;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
