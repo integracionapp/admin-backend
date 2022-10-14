@@ -17,7 +17,7 @@ public class Provider {
     private String phone;
     private String email;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "provider_id")
     private List<Address> address;
     private String webPageUrl;

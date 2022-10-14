@@ -4,6 +4,7 @@ import com.deliverar.admin.mappers.ProviderMapper;
 import com.deliverar.admin.model.dto.Address.AddressRequest;
 import com.deliverar.admin.model.dto.Provider.ProviderRequest;
 import com.deliverar.admin.repository.ProviderRepository;
+import com.deliverar.admin.service.ProviderService.ProviderService;
 import com.deliverar.admin.service.ProviderService.ProviderServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,7 +29,7 @@ class ProviderServiceImplTest {
     private ProviderRepository providerRepository;
 
     @Autowired
-    private ProviderServiceImpl providerService;
+    private ProviderService providerService;
 
     private final ProviderMapper providerMapper = ProviderMapper.INSTANCE;
 
