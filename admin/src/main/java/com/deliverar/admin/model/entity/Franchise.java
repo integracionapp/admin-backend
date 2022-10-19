@@ -20,7 +20,7 @@ public class Franchise {
     private String webPageUrl;
 
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "franchise_id")
     private List<Address> address;
 

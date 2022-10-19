@@ -30,7 +30,7 @@ public class FranchiseDataLoader implements ApplicationRunner {
     }
 
     private void createFranchise(){
-        List<Address> addresses = new ArrayList<>();
+       /* List<Address> addresses = new ArrayList<>();
         addresses.add(this.getAddressDummy());
 
         Franchise franchise = Franchise.builder()
@@ -43,7 +43,7 @@ public class FranchiseDataLoader implements ApplicationRunner {
                 .build();
 
         franchiseRepository.save(franchise);
-
+        */
     }
 
     private Address getAddressDummy(){

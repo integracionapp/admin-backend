@@ -74,7 +74,6 @@ class ProviderServiceImplTest {
                 .webPageUrl("www.example.com")
                 .addresses(addresses)
                 .build();
-        providerService.saveNewProvider(providerRequest);
 
         providerUpdateRequest = new ProviderUpdateRequest();
         addressUpdateRequests = new ArrayList<>();
@@ -84,12 +83,13 @@ class ProviderServiceImplTest {
     @Test
     void saveNewProvider() {
         ProviderResponse providerResponse = providerService.saveNewProvider(providerRequest);
-        ProviderResponse providerFound = providerMapper.providerToProviderResponse(providerRepository.findByBusinessName("Marolio2"));
+        ProviderResponse providerFound = providerMapper.providerToProviderResponse(providerRepository.findByBusinessName("Marolio4"));
         assertThat(providerFound).usingRecursiveComparison().isEqualTo(providerResponse);
     }
 
     @Test
     void update() {
+        providerService.saveNewProvider(providerRequest);
         Provider provider = providerRepository.findByBusinessName(providerRequest.getBusinessName());
         AddressRequest address = providerRequest.getAddresses().get(0);
         addressUpdateRequest = AddressUpdateRequest.builder()

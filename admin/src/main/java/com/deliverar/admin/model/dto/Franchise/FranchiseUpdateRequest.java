@@ -2,6 +2,7 @@ package com.deliverar.admin.model.dto.Franchise;
 
 
 import com.deliverar.admin.model.dto.Address.AddressRequest;
+import com.deliverar.admin.model.dto.Address.AddressUpdateRequest;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import org.hibernate.validator.constraints.Range;
@@ -45,5 +46,5 @@ public class FranchiseUpdateRequest {
     private String webPageUrl;
 
     @Schema(description = "List of Franchise addresses", required = true)
-    private List<AddressRequest> addresses;
+    private List<AddressUpdateRequest> addresses;
 }
