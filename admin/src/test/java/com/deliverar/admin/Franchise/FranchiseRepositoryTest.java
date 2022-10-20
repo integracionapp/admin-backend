@@ -29,30 +29,6 @@ class FranchiseRepositoryTest {
     String name;
     @BeforeEach
     void setUp() {
-       /* List<Address> addresses = new ArrayList<>();
-        Address address = Address.builder()
-                .street("Benedetto")
-                .number(4521)
-                .latitude("52° 31' 28'' N")
-                .longitude("13° 24' 38'' E")
-                .zipCode("1365")
-                .city("Escobar")
-                .province("Buenos Aires")
-                .build();
-        addresses.add(address);
-
-        Franchise prueba = Franchise.builder()
-                .name("RestaurantExample")
-                .description("Established in ...")
-                .phone("4356-3927")
-                .cuit(new BigInteger("20234124327"))
-                .webPageUrl("franchiseExample.com")
-                .address(addresses)
-                .build();
-
-        frachises.add(prueba);
-        */
-
         name = "RestaurantExample";
     }
 
