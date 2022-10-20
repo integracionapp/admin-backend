@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/operator")
+@RequestMapping("/operators")
 @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Operator found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = OperatorResponse.class))),
         @ApiResponse(responseCode = "404", description = "Operator not found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))),
