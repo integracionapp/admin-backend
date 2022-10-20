@@ -111,6 +111,7 @@ class FranchiseServiceImplTest {
         franchiseService.update(franchiseUpdateRequest);
         franchise =  franchiseRepository.findByName(franchiseUpdateRequest.getName());
         assertThat(franchise.getName()).isEqualTo(franchiseUpdateRequest.getName());
+
     }
 
     @Test
