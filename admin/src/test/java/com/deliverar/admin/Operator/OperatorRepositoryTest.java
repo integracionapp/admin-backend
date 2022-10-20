@@ -35,6 +35,7 @@ class OperatorRepositoryTest {
         operators = operatorRepository.findByLastNameContaining(lastName);
         for (Operator o: operators){
             assertTrue(o.getLastName().contains(lastName));
+
         }
     }
 }
