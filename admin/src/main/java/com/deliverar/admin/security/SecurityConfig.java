@@ -14,8 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import static org.springframework.http.HttpMethod.GET;
-import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.http.HttpMethod.*;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 @Configuration
@@ -39,8 +38,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                 .antMatchers("/login/**", "/admin/token/refresh/**").permitAll()
+
+                //Providers
                 .antMatchers(GET, "/provider/**").hasAnyAuthority("ROLE_PROVIDER", "ROLE_ADMIN")
                 .antMatchers(POST, "/provider/**").hasAnyAuthority("ROLE_ADMIN")
+                .antMatchers(PUT, "/provider/**").hasAnyAuthority("ROLE_ADMIN")
+                .antMatchers(DELETE, "/provider/**").hasAnyAuthority("ROLE_ADMIN")
+
+                //Operators
+                .antMatchers(GET, "/operators/**").hasAnyAuthority("ROLE_OPERATOR", "ROLE_ADMIN")
+                .antMatchers(POST, "/operators/**").hasAnyAuthority("ROLE_ADMIN")
+                .antMatchers(PUT, "/operators/**").hasAnyAuthority("ROLE_ADMIN")
+                .antMatchers(DELETE, "/operators/**").hasAnyAuthority("ROLE_ADMIN")
+
+                //Franchises
+                .antMatchers(GET, "/franchises/**").hasAnyAuthority("ROLE_FRANCHISE", "ROLE_ADMIN")
+                .antMatchers(POST, "/franchises/**").hasAnyAuthority("ROLE_ADMIN")
+                .antMatchers(PUT, "/franchises/**").hasAnyAuthority("ROLE_ADMIN")
+                .antMatchers(DELETE, "/franchises/**").hasAnyAuthority("ROLE_ADMIN")
+
+                //Users
                 .antMatchers("/admin/user/**").hasAnyAuthority("ROLE_ADMIN")
                 .anyRequest().authenticated();
         http.addFilter(customAuthenticationFilter);

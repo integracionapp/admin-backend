@@ -1,5 +1,8 @@
 package com.deliverar.admin.service.UserService;
 
+import com.deliverar.admin.mappers.UserMapper;
+import com.deliverar.admin.model.dto.User.RoleResponse;
+import com.deliverar.admin.model.dto.User.UserResponse;
 import com.deliverar.admin.model.entity.Role;
 import com.deliverar.admin.model.entity.User;
 import com.deliverar.admin.repository.RoleRepository;
@@ -24,6 +27,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+    private final UserMapper userMapper = UserMapper.INSTANCE;
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -42,16 +47,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public User saveUser(User user) {
+    public UserResponse saveUser(User user) {
         log.info("Saving new user {} to the database", user.getName());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+        return userMapper.userToUserResponse(userRepository.save(user));
     }
 
     @Override
-    public Role saveRole(Role role) {
+    public RoleResponse saveRole(Role role) {
         log.info("Saving new role {} to the database", role.getName());
-        return roleRepository.save(role);
+        return userMapper.roleToRoleResponse(roleRepository.save(role));
     }
 
     @Override
@@ -69,9 +74,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public List<User> getUsers() {
+    public List<UserResponse> getUsers() {
         log.info("Fetching all users");
-        return userRepository.findAll();
+        return userMapper.userToUserResponse(userRepository.findAll());
     }
 
 

@@ -1,5 +1,6 @@
 package com.deliverar.admin.controller;
 
+import com.deliverar.admin.model.dto.User.RoleResponse;
 import com.deliverar.admin.model.dto.User.RoleToUserForm;
 import com.deliverar.admin.model.entity.Role;
 import com.deliverar.admin.service.UserService.UserService;
@@ -21,7 +22,7 @@ public class RoleController {
     private final UserService userService;
 
     @PostMapping("/")
-    public ResponseEntity<Role> saveRole(@RequestBody Role role) {
+    public ResponseEntity<RoleResponse> saveRole(@RequestBody Role role) {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/roles/").toUriString());
         return ResponseEntity.created(uri).body(userService.saveRole(role));
     }

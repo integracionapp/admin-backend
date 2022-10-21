@@ -34,7 +34,7 @@ public class TokenController {
 
     private final TokenService tokenService;
 
-    @GetMapping("/token/refresh")
+    @GetMapping("/refresh")
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         tokenService.refreshToken(request,response);
     }

@@ -5,6 +5,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.deliverar.admin.model.dto.User.RoleToUserForm;
+import com.deliverar.admin.model.dto.User.UserResponse;
 import com.deliverar.admin.model.entity.Role;
 import com.deliverar.admin.model.entity.User;
 import com.deliverar.admin.service.UserService.UserService;
@@ -37,12 +38,12 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/")
-    public ResponseEntity<List<User>>getUsers() {
+    public ResponseEntity<List<UserResponse>>getUsers() {
         return ResponseEntity.ok().body(userService.getUsers());
     }
 
     @PostMapping("/")
-    public ResponseEntity<User>saveUser(@RequestBody User user) {
+    public ResponseEntity<UserResponse>saveUser(@RequestBody User user) {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/users/").toUriString());
         return ResponseEntity.created(uri).body(userService.saveUser(user));
     }
