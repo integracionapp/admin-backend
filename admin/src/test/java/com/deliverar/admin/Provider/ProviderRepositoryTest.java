@@ -42,32 +42,5 @@ class ProviderRepositoryTest {
         }
 
     }
-    /*
-    List<Provider> setUp() {
-        List<Provider> p= new ArrayList<>();
-        List<Address> addresses = new ArrayList<>();
-        Address address = Address.builder()
-                .street("Benedetto")
-                .number(4521)
-                .latitude("52° 31' 28'' N")
-                .longitude("13° 24' 38'' E")
-                .zipCode("1365")
-                .city("Escobar")
-                .province("Buenos Aires")
-                .build();
-        addresses.add(address);
-        Provider prueba = Provider.builder()
-                .businessName("Marolio")
-                .cuit(new BigInteger("27280335148"))
-                .phone("4268-0214")
-                .email("example@gmail.com")
-                .webPageUrl("www.example.com")
-                .address(addresses)
-                .build();
-        p.add(prueba);
-        return p;
-    }
-
-     */
 
 }
