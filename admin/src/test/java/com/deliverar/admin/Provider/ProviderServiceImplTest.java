@@ -161,7 +161,6 @@ class ProviderServiceImplTest {
         List<ProviderResponse> providers = providerService.getProvidersByName(name);
         for(ProviderResponse p: providers) {
             assertThat(p.getBusinessName(),containsString(name));
-            System.out.println("Entidad");
         }
     }
 }
