@@ -64,7 +64,7 @@ public class ProviderController {
         return new ResponseEntity<>(providerService.getAllProviders(), HttpStatus.OK);
     }
 
-    @GetMapping("/find/{name}")
+    @GetMapping("/name/{name}")
     @Operation(summary = "Get Providers by name", description = "Get Providers by name")
     public ResponseEntity<List<ProviderResponse>> getProvidersByName(@PathVariable String name){
         return new ResponseEntity<>(providerService.getProvidersByName(name), HttpStatus.OK);

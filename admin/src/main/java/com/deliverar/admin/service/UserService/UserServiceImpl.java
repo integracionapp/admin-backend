@@ -1,7 +1,9 @@
 package com.deliverar.admin.service.UserService;
 
 import com.deliverar.admin.mappers.UserMapper;
+import com.deliverar.admin.model.dto.User.RoleRequest;
 import com.deliverar.admin.model.dto.User.RoleResponse;
+import com.deliverar.admin.model.dto.User.UserRequest;
 import com.deliverar.admin.model.dto.User.UserResponse;
 import com.deliverar.admin.model.entity.Role;
 import com.deliverar.admin.model.entity.User;
@@ -47,15 +49,22 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public UserResponse saveUser(User user) {
-        log.info("Saving new user {} to the database", user.getName());
+    public UserResponse saveUser(UserRequest userRequest) {
+        log.info("Saving new user {} to the database", userRequest.getName());
+        User user = userMapper.userRequestToUser(userRequest);
+        Role role;
+        for (String roleName : userRequest.getRoles()){
+            role = roleRepository.findByName(roleName);
+            user.getRoles().add(role);
+        }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userMapper.userToUserResponse(userRepository.save(user));
     }
 
     @Override
-    public RoleResponse saveRole(Role role) {
-        log.info("Saving new role {} to the database", role.getName());
+    public RoleResponse saveRole(RoleRequest roleRequest) {
+        log.info("Saving new role {} to the database", roleRequest.getName());
+        Role role = userMapper.roleRequestToRole(roleRequest);
         return userMapper.roleToRoleResponse(roleRepository.save(role));
     }
 

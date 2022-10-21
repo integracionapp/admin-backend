@@ -1,5 +1,7 @@
 package com.deliverar.admin.initializer;
 
+import com.deliverar.admin.model.dto.User.RoleRequest;
+import com.deliverar.admin.model.dto.User.UserRequest;
 import com.deliverar.admin.model.entity.Role;
 import com.deliverar.admin.model.entity.User;
 import com.deliverar.admin.repository.UserRepository;
@@ -20,13 +22,13 @@ public class UserDataLoader implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        userService.saveRole(new Role(null, "ROLE_ADMIN"));
-        userService.saveRole(new Role(null, "ROLE_PROVIDER"));
-        userService.saveRole(new Role(null, "ROLE_FRANCHISE"));
-        userService.saveRole(new Role(null, "ROLE_OPERATOR"));
+        userService.saveRole(new RoleRequest("ROLE_ADMIN"));
+        userService.saveRole(new RoleRequest( "ROLE_PROVIDER"));
+        userService.saveRole(new RoleRequest( "ROLE_FRANCHISE"));
+        userService.saveRole(new RoleRequest( "ROLE_OPERATOR"));
 
-        userService.saveUser(new User(null, "Gonzalo Bari", "gnb", "1234", new ArrayList<>()));
-        userService.saveUser(new User(null, "Franco Siciliano", "sicilian", "1234", new ArrayList<>()));
+        userService.saveUser(new UserRequest("Gonzalo Bari", "gnb", "1234", new ArrayList<>()));
+        userService.saveUser(new UserRequest( "Franco Siciliano", "sicilian", "1234", new ArrayList<>()));
 
 
         userService.addRoleToUser("gnb", "ROLE_ADMIN");

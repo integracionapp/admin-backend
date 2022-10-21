@@ -29,6 +29,7 @@ import java.util.List;
 @Tag(name = "Operator API", description = "Operator API developed by Deliver.ar Administrator")
 public class OperatorController {
 
+    //TODO Agregar el Header del token para que se vea en swagger
     @Autowired
     private OperatorService operatorService;
 
