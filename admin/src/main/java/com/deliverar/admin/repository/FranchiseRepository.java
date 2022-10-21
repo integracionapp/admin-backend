@@ -8,5 +8,6 @@ import java.util.List;
 public interface FranchiseRepository extends JpaRepository<Franchise,Long> {
 
     List<Franchise> findByNameContaining(String name);
+    Franchise findByName(String Name);
 
 }

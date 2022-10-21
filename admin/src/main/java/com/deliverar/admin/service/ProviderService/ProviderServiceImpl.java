@@ -18,7 +18,7 @@ import java.util.List;
 
 @Service
 @Slf4j
-@Transactional
+//@Transactional
 public class ProviderServiceImpl implements ProviderService {
 
     @Autowired

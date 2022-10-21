@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface ProviderRepository extends JpaRepository<Provider, Long> {
     List<Provider> findByBusinessNameContaining(String BusinessName);
+    Provider findByBusinessName(String BusinessName);
 
 }
