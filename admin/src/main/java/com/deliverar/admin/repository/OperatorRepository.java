@@ -8,5 +8,6 @@ import java.util.List;
 public interface OperatorRepository extends JpaRepository<Operator, Long> {
 
     List<Operator> findByLastNameContaining(String lastName);
+    Operator findByLastName(String lastName);
 
 }
