@@ -9,6 +9,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -50,11 +52,11 @@ public class OperatorUpdateRequest {
 
     @Schema(description = "Birth Date", example = "26/03/2001", required = true)
     @NotNull(message = "Birth Date cannot be null")
-    private Date birthDate;
+    private LocalDateTime birthDate;
 
     @Schema(description = "Register Date", example = "25/08/2020", required = true)
     @NotNull(message = "Register date cannot be null")
-    private Date registerDate;
+    private LocalDateTime registerDate;
 
     @Schema(description = "List of Operator Addresses", required = true)
     private List<AddressUpdateRequest> addresses;

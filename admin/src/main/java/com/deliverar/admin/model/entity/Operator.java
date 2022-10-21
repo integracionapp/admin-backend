@@ -24,7 +24,7 @@ public class Operator {
     private LocalDateTime birthDate;
     private LocalDateTime registerDate;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "operator_id")
     private List<Address> addresses;
 }

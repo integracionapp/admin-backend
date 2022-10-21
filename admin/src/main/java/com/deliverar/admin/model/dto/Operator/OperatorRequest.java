@@ -48,11 +48,11 @@ public class OperatorRequest {
 
     @Schema(description = "Birth Date", example = "26/03/2001", required = true)
     @NotNull(message = "Birth Date cannot be null")
-    private Date birthDate;
+    private LocalDateTime birthDate;
 
     @Schema(description = "Register Date", example = "25/08/2020", required = true)
     @NotNull(message = "Register date cannot be null")
-    private Date registerDate;
+    private LocalDateTime registerDate;
 
     @Schema(description = "List of Operator Addresses", required = true)
     private List<AddressRequest> addresses;
