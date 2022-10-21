@@ -37,6 +37,7 @@ import static org.springframework.http.HttpStatus.FORBIDDEN;
 public class TokenServiceImpl implements TokenService{
 
     private final UserService userService;
+    private final ObjectMapper objectMapper;
 
     @Value("${jwt.secret}")
     private String secret;
@@ -66,15 +67,15 @@ public class TokenServiceImpl implements TokenService{
                 User user = userService.getUser(username);
                 String access_token = JWT.create()
                         .withSubject(user.getUsername())
-                        .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
+                        .withExpiresAt(new Date(System.currentTimeMillis() + tokenExpiration))
                         .withIssuer(request.getRequestURL().toString())
                         .withClaim("roles", user.getRoles().stream().map(Role::getName).collect(Collectors.toList()))
                         .sign(algorithm);
                 Map<String, String> tokens = new HashMap<>();
                 tokens.put("access_token", access_token);
-                tokens.put("refresh_token", refresh_token);
+                tokens.put("token_expires_in", tokenExpirationReadable);
                 response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-                new ObjectMapper().writeValue(response.getOutputStream(), tokens);
+                objectMapper.writeValue(response.getOutputStream(), tokens);
             }catch (Exception exception) {
                 response.setHeader("error", exception.getMessage());
                 response.setStatus(FORBIDDEN.value());
