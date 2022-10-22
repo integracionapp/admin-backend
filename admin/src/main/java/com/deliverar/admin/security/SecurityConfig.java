@@ -45,10 +45,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login/**", "/token/refresh/**").permitAll()
 
                 //Providers
-                .antMatchers(GET, "/provider/**").hasAnyAuthority("ROLE_PROVIDER", "ROLE_ADMIN")
-                .antMatchers(POST, "/provider/**").hasAnyAuthority("ROLE_ADMIN")
-                .antMatchers(PUT, "/provider/**").hasAnyAuthority("ROLE_ADMIN")
-                .antMatchers(DELETE, "/provider/**").hasAnyAuthority("ROLE_ADMIN")
+                .antMatchers(GET, "/providers/**").hasAnyAuthority("ROLE_PROVIDER", "ROLE_ADMIN")
+                .antMatchers(POST, "/providers/**").hasAnyAuthority("ROLE_ADMIN")
+                .antMatchers(PUT, "/providers/**").hasAnyAuthority("ROLE_ADMIN")
+                .antMatchers(DELETE, "/providers/**").hasAnyAuthority("ROLE_ADMIN")
 
                 //Operators
                 .antMatchers(GET, "/operators/**").hasAnyAuthority("ROLE_OPERATOR", "ROLE_ADMIN")
