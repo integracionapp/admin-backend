@@ -18,30 +18,30 @@ public class AddressUpdateRequest {
     private Long id;
 
     @Schema(description = "Street Number", example = "4521", required = true)
-    @NotBlank(message = "Street Number is required")
+    @NotBlank(message = "Introducir una calle")
     private String street;
 
     @Schema(description = "Street Number", example = "4521", required = true)
-    @NotBlank(message = "Street Number is required")
+    @NotBlank(message = "Introducir un numero de dirección")
     private Integer number;
 
     @Schema(description = "Latitude", example = "52° 31' 28'' N", required = true)
-    @NotBlank(message = "Latitude is required")
+    @NotBlank(message = "Intoducir la latitud")
     private String latitude;
 
     @Schema(description = "Longitude", example = "13° 24' 38'' E", required = true)
-    @NotBlank(message = "Longitude is required")
+    @NotBlank(message = "Introducir la longitud")
     private String longitude;
 
     @Schema(description = "Zip Code", example = "1365", required = true)
-    @NotBlank(message = "Zip Code is required")
+    @NotBlank(message = "Introducir el codigo postal")
     private String zipCode;
 
     @Schema(description = "City", example = "Escobar", required = true)
-    @NotBlank(message = "City is required")
+    @NotBlank(message = "Introducir la ciudad")
     private String city;
 
     @Schema(description = "Province", example = "Buenos Aires", required = true)
-    @NotBlank(message = "Province is required")
+    @NotBlank(message = "Introducir la provincia")
     private String province;
 }

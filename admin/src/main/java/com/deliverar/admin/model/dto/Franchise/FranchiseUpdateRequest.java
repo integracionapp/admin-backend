@@ -26,20 +26,20 @@ public class FranchiseUpdateRequest {
     private Long id;
 
     @Schema(description = "Franchise Name", example = "RestaurantExample", required = true)
-    @NotBlank(message = "Name is required")
+    @NotBlank(message = "Introducir el nombre de la franquicia")
     private String name;
 
     @Schema(description = "Description of the franchise", example = "Established in ...", required = true)
-    @NotBlank(message = "Desciption is required")
+    @NotBlank(message = "Introducir una descripción")
     private String description;
 
     @Schema(description = "Phone number", example = "4356-3927", required = true)
-    @NotBlank(message = "Phone is required")
+    @NotBlank(message = "Intoducir el número de telefono")
     private String phone;
 
     @Schema(description = "CUIT", example = "20234124327", required = true)
     @Range(min = 11111111111L, max = 99999999999L, message = "CUIT must have 11 digits")
-    @NotNull(message = "CUIT cannot be NULL")
+    @NotNull(message = "Introducir el CUIT")
     private BigInteger cuit;
 
     @Schema(description = "WebPage of the Franchise", example = "franchiseExample.com")
