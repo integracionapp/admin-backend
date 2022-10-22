@@ -1,0 +1,21 @@
+version: "3"
+services:
+  admin:
+    image: admin
+    ports:
+      - "8080:8080"
+    networks:
+      - admin-mysql
+    depends_on:
+      - adminDB
+
+  adminDB:
+    image: mysql:8
+    networks:
+      - admin-mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=root
+
+networks:
+  admin-mysql:
