@@ -13,15 +13,6 @@ import java.time.LocalDateTime;
 @ControllerAdvice
 public class FranchiseExceptionHandler {
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ExceptionResponse> handleException(Exception e){
-        ExceptionResponse ex = ExceptionResponse.builder()
-                .message(e.getMessage())
-                .timestamp(LocalDateTime.now())
-                .build();
-        return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
     @ExceptionHandler(FranchiseNotFoundException.class)
     public ResponseEntity<ExceptionResponse> handleFranchiseNotFoundException(FranchiseNotFoundException f){
         ExceptionResponse ex = ExceptionResponse.builder()
