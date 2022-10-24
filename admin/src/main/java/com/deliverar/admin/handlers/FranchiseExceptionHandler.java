@@ -13,6 +13,8 @@ import java.time.LocalDateTime;
 @ControllerAdvice
 public class FranchiseExceptionHandler {
 
+
+
     @ExceptionHandler(FranchiseNotFoundException.class)
     public ResponseEntity<ExceptionResponse> handleFranchiseNotFoundException(FranchiseNotFoundException f){
         ExceptionResponse ex = ExceptionResponse.builder()
