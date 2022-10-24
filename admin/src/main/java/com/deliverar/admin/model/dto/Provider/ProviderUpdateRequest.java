@@ -9,6 +9,7 @@ import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.math.BigInteger;
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.List;
 public class ProviderUpdateRequest {
 
     @Schema(description = "Provider ID", example = "1", required = true)
-    @NotBlank(message = "Provider ID is required")
+    @NotNull(message = "ID del proveedor es requerido")
     private Long id;
 
     @Schema(description = "Business Name", example = "Marolio", required = true)
