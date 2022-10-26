@@ -1,0 +1,52 @@
+name: Spring Boot Pipeline
+on:
+  workflow_dispatch:
+  # This will trigger workflow whenever a change is pushed to master branch
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    name: Build Archive
+    runs-on: ubuntu-latest
+    steps:
+      # Check-out your repository under $GITHUB_WORKSPACE, so your workflow can access it
+      - uses: actions/checkout@v1
+      # Set up JDK 11
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: '11'
+      # Build the application using Maven
+      - name: Build with Maven
+        run: mvn clean package -DskipTests --file pom.xml
+      - name: Upload JAR
+        # We upload so we can re-use same jar in next job.
+        uses: actions/upload-artifact@v2
+        with:
+          # Name of artifact
+          name: artifact
+          # Relative path to jar file
+          path: target/admin-0.0.1-SNAPSHOT
+  # Deploy's job
+  deploy:
+    name: Deploy to Elastic Beanstalk
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download JAR
+        # Download the artifact which was uploaded in the Build Archive's job
+        uses: actions/download-artifact@v2
+        with:
+          name: artifact
+      # Deploy the artifact (JAR) into AWS Beanstalk
+      - name: Deploy to EB
+        uses: einaregilsson/beanstalk-deploy@v13
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }} # This is referred from Github Secrets
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }} # This is referred from Github Secrets
+          use_existing_version_if_available: true
+          application_name: Deliver.ar # Application name we created in Elastic BeanStalk
+          environment_name: Deliverar-env-1 # Environment name we created in Elastic BeanStalk
+          version_label: ${{github.SHA}}
+          region: us-east-1
+          deployment_package: admin-0.0.1-SNAPSHOT # Download artifacts from previous job
