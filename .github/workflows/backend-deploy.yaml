@@ -28,7 +28,7 @@ jobs:
           # Name of artifact
           name: artifact
           # Relative path to jar file
-          path: ./target/admin-0.0.1-SNAPSHOT.jar
+          path: ./admin/target/admin-0.0.1-SNAPSHOT.jar
   # Deploy's job
   deploy:
     needs: build
