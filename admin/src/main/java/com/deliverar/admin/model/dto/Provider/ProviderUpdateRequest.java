@@ -26,7 +26,7 @@ public class ProviderUpdateRequest {
     private String businessName;
 
     @Schema(description = "CUIT", example = "27280335148", required = true)
-    @Range(min = 11111111111L, max = 99999999999L, message = "CUIT must have 11 digits") //TODO Check
+    @Range(min = 11111111111L, max = 99999999999L, message = "El CUIT debe contar con 11 digitos") //TODO Check
     @NotNull(message = "Introducir un CUIT válido")
     private BigInteger cuit;
 

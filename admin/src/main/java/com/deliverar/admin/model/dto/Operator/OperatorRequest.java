@@ -34,7 +34,7 @@ public class OperatorRequest {
     private String gender;
 
     @Schema(description = "DNI", example = "42684753", required = true)
-    @Range(min = 1000000, max = 99999999, message = "DNI must have 8 digits")
+    @Range(min = 1000000, max = 99999999, message = "El DNI debe contar con 8 digitos como maximo y 7 como minimo")
     @NotNull(message = "Introducir un DNI válido")
     private BigInteger dni;
 

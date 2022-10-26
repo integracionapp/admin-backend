@@ -32,7 +32,7 @@ public class FranchiseRequest {
     private String phone;
 
     @Schema(description = "CUIT", example = "20234124327", required = true)
-    @Range(min = 11111111111L, max = 99999999999L, message = "CUIT must have 11 digits")
+    @Range(min = 11111111111L, max = 99999999999L, message = "El CUIT debe contar con 11 digitos")
     @NotNull(message = "Introducir el CUIT")
     private BigInteger cuit;
 
