@@ -1,10 +1,7 @@
 package com.deliverar.admin.model.dto.User;
 
 import com.deliverar.admin.model.entity.Role;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,6 +16,7 @@ import static javax.persistence.FetchType.EAGER;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class UserRequest {
 
     private String name;
