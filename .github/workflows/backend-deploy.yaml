@@ -21,11 +21,16 @@ jobs:
       - name: Build with Maven
         working-directory: ./admin
         run: mvn clean package -DskipTests
-      - name: Inject DB password
+      - name: Inject DB password to main properties file
         uses: datamonsters/replace-action@v2
         with:
-          files: './admin/src/main/resources/application.properties,./admin/src/main/resources/application-test.properties'
-          replacements: '$DB_PASSWORD=${{ secrets.DB_PASSWORD }}'
+          files: './admin/src/main/resources/application.properties'
+          replacements: 'DB_PASSWORD=${{ secrets.DB_PASSWORD }}'
+      - name: Inject DB password to test properties file
+        uses: datamonsters/replace-action@v2
+        with:
+          files: './admin/src/main/resources/application-test.properties'
+          replacements: 'DB_PASSWORD=${{ secrets.DB_PASSWORD }}'
       - name: Upload JAR
         # We upload so we can re-use same jar in next job.
         uses: actions/upload-artifact@v2
