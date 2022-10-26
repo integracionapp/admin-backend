@@ -21,7 +21,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/provider")
+@RequestMapping("/providers")
 @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Provider found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProviderResponse.class))),
         @ApiResponse(responseCode = "404", description = "Provider NOT found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))),
@@ -64,7 +64,7 @@ public class ProviderController {
         return new ResponseEntity<>(providerService.getAllProviders(), HttpStatus.OK);
     }
 
-    @GetMapping("/find/{name}")
+    @GetMapping("/name/{name}")
     @Operation(summary = "Get Providers by name", description = "Get Providers by name")
     public ResponseEntity<List<ProviderResponse>> getProvidersByName(@PathVariable String name){
         return new ResponseEntity<>(providerService.getProvidersByName(name), HttpStatus.OK);

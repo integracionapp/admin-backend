@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/operator")
+@RequestMapping("/operators")
 @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Operator found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = OperatorResponse.class))),
         @ApiResponse(responseCode = "404", description = "Operator not found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))),
@@ -29,6 +29,7 @@ import java.util.List;
 @Tag(name = "Operator API", description = "Operator API developed by Deliver.ar Administrator")
 public class OperatorController {
 
+    //TODO Agregar el Header del token para que se vea en swagger
     @Autowired
     private OperatorService operatorService;
 
@@ -62,7 +63,7 @@ public class OperatorController {
     public ResponseEntity<List<OperatorResponse>> getAllOperators() {
         return new ResponseEntity<>(operatorService.getAllOperators(), HttpStatus.OK);
     }
-    @GetMapping("/find/{name}")
+    @GetMapping("/find/{name}") //TODO Cambiar esto por /name/{name}
     @Operation(summary = "Get Operators by their last name", description = "Get Operators by last name")
     public ResponseEntity<List<OperatorResponse>> getOperatorsByLastName(@PathVariable String name){
         return new ResponseEntity<>(operatorService.getOperatorsByLastName(name),HttpStatus.OK);
