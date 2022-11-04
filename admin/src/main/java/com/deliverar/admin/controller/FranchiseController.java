@@ -71,6 +71,4 @@ public class FranchiseController {
     public ResponseEntity<List<FranchiseResponse>> getFranchisesByName(@PathVariable String name){
         return new ResponseEntity<>(franchiseService.getFranchisesByName(name), HttpStatus.OK);
     }
-
-
 }
