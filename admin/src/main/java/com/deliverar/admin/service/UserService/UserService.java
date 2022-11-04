@@ -16,4 +16,6 @@ public interface UserService {
     void addRoleToUser(String username, String roleName);
     User getUser(String username);
     List<UserResponse> getUsers();
+    void sendEmail(String email, String password, String user);
+
 }

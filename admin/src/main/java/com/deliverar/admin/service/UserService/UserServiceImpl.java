@@ -9,8 +9,10 @@ import com.deliverar.admin.model.entity.Role;
 import com.deliverar.admin.model.entity.User;
 import com.deliverar.admin.repository.RoleRepository;
 import com.deliverar.admin.repository.UserRepository;
+import com.deliverar.admin.service.EmailService.EmailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -30,6 +32,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper = UserMapper.INSTANCE;
+
+
+    @Autowired
+    private EmailService emailService;
 
 
     @Override
@@ -58,6 +64,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             user.getRoles().add(role);
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+
+
         return userMapper.userToUserResponse(userRepository.save(user));
     }
 
@@ -87,6 +96,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public List<UserResponse> getUsers() {
         log.info("Fetching all users");
         return userMapper.userToUserResponse(userRepository.findAll());
+    }
+
+    @Override
+    public void sendEmail(String email, String password, String user) {
+
+        emailService.sendEmail(email,"CUENTA CREADA CON EXITO","Bienvenido a Deliverar. \n " +
+                "\n" +
+                "Su cuenta ha sido creada con exito.\n " +
+                "Su usuario es: "+user+"\n "+
+                "Su contraseña: "+password+"\n "+
+                "Ingrese a la aplicacion para completar el resto de los datos de su cuenta.");
     }
 
 
