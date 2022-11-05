@@ -1,6 +1,10 @@
 package com.deliverar.admin.model.dto.Operator;
 
 import com.deliverar.admin.model.dto.Address.AddressRequest;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import org.hibernate.validator.constraints.Range;
@@ -48,10 +52,14 @@ public class OperatorRequest {
 
     @Schema(description = "Birth Date", example = "26/03/2001", required = true)
     @NotNull(message = "Introducir una fecha de nacimiento válida")
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime birthDate;
 
     @Schema(description = "Register Date", example = "25/08/2020", required = true)
     @NotNull(message = "Introducir una fecha válida")
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime registerDate;
 
     @Schema(description = "List of Operator Addresses", required = true)

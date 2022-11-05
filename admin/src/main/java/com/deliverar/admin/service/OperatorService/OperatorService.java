@@ -5,6 +5,7 @@ import com.deliverar.admin.model.dto.Operator.OperatorRequest;
 import com.deliverar.admin.model.dto.Operator.OperatorResponse;
 import com.deliverar.admin.model.dto.Operator.OperatorUpdateRequest;
 import com.deliverar.admin.model.entity.Operator;
+import com.deliverar.admin.model.entity.User;
 
 import java.util.List;
 
@@ -23,5 +24,5 @@ public interface OperatorService {
     OperatorResponse getOperatorResponseById(Long id) throws OperatorNotFoundException;
 
     List<OperatorResponse> getOperatorsByLastName(String lastName);
-
+    Operator findByUser(User user) throws Exception;
 }

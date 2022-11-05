@@ -1,18 +1,31 @@
 package com.deliverar.admin.service.UserService;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
+import com.deliverar.admin.exceptions.UsernameAlreadyExistException;
+import com.deliverar.admin.mappers.OperatorMapper;
 import com.deliverar.admin.mappers.UserMapper;
+import com.deliverar.admin.model.dto.Operator.OperatorResponse;
 import com.deliverar.admin.model.dto.User.RoleRequest;
 import com.deliverar.admin.model.dto.User.RoleResponse;
 import com.deliverar.admin.model.dto.User.UserRequest;
 import com.deliverar.admin.model.dto.User.UserResponse;
+import com.deliverar.admin.model.entity.Operator;
 import com.deliverar.admin.model.entity.Role;
 import com.deliverar.admin.model.entity.User;
+import com.deliverar.admin.repository.OperatorRepository;
 import com.deliverar.admin.repository.RoleRepository;
 import com.deliverar.admin.repository.UserRepository;
+import com.deliverar.admin.service.OperatorService.OperatorService;
+import com.deliverar.admin.service.TokenService.TokenService;
+import com.github.javafaker.Faker;
 import com.deliverar.admin.service.EmailService.EmailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,6 +35,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -33,9 +47,19 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper = UserMapper.INSTANCE;
 
+    @Autowired
+    private Faker faker;
 
     @Autowired
     private EmailService emailService;
+
+    @Autowired
+    private OperatorService operatorService;
+
+    private final OperatorMapper operatorMapper = OperatorMapper.INSTANCE;
+
+    @Value("${jwt.secret}")
+    private String secret;
 
 
     @Override
@@ -64,9 +88,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             user.getRoles().add(role);
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-
-
-
         return userMapper.userToUserResponse(userRepository.save(user));
     }
 
@@ -99,15 +120,76 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public void sendEmail(String email, String password, String user) {
+    public UserRequest createUserCredential(String role) {
 
-        emailService.sendEmail(email,"CUENTA CREADA CON EXITO","Bienvenido a Deliverar. \n " +
-                "\n" +
-                "Su cuenta ha sido creada con exito.\n " +
-                "Su usuario es: "+user+"\n "+
-                "Su contraseña: "+password+"\n "+
-                "Ingrese a la aplicacion para completar el resto de los datos de su cuenta.");
+        String username = faker.funnyName().name();
+        String password = faker.internet().password();
+        String name = faker.name().fullName();
+        while (!this.isUsernameAvailable(username))
+            username = faker.funnyName().name();
+
+        return UserRequest.builder()
+                .name(name)
+                .username(username)
+                .password(password)
+                .roles(Arrays.asList(role))
+                .build();
     }
 
+    @Override
+    public void sendEmail(String email, String password, String user) {
+        log.info("Sending Email to {}", email);
+        emailService.sendEmail(email,"CUENTA CREADA CON EXITO","" +
+                "<html>" +
+                "<body>" +
+                "   <h1>Bienvenido a Deliverar.</h1>" +
+                "   <br>" +
+                "   <h2>Su cuenta ha sido creada con exito</h2>" +
+                "   <br> " +
+                "   <p>" +
+                "       Su usuario es: " +user +
+                "       <br>" +
+                "       Su contraseña es: " + password +
+                "   </p>" +
+                "   <br>" +
+                    "<p>" +
+                        "Ya se puede loguear y usar los servicios de Deliverar, puede cambiar el usuario y contraseña si lo desea."+
+                "   </p>"+
+                "</body>" +
+                "</html>");
+    }
 
+    @Override
+    public User findById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with id "+ id));
+    }
+
+    @Override
+    public OperatorResponse loginOperator(String token) throws Exception {
+        String cleanToken = token.substring("Bearer ".length());
+        Algorithm algorithm = Algorithm.HMAC256(secret.getBytes());
+        JWTVerifier verifier = JWT.require(algorithm).build();
+        DecodedJWT decodedJWT = verifier.verify(cleanToken);
+        String username = decodedJWT.getSubject();
+        User user = this.findByUsername(username);
+        return operatorMapper.operatorToOperatorResponse(operatorService.findByUser(user));
+    }
+
+    @Override
+    public User findByUsername(String username) {
+        User user = userRepository.findByUsername(username);
+        if (user != null)
+            return user;
+
+        throw new UsernameNotFoundException("User not found with username -> "+ username);
+    }
+
+    @Override
+    public boolean isUsernameAvailable(String username) {
+        if (!userRepository.existsByUsername(username))
+            return true;
+
+        throw new UsernameAlreadyExistException("We have a user with username: "+username);
+    }
 }
