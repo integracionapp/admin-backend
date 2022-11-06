@@ -41,6 +41,8 @@ import static org.springframework.http.HttpStatus.FORBIDDEN;
 @Tag(name = "Token API", description = "Token API developed by Deliverar Administrator")
 public class TokenController {
 
+    //TODO Fixear spring.main.allow-circular-references
+
     private final TokenService tokenService;
 
     @GetMapping("/refresh")
@@ -69,6 +71,4 @@ public class TokenController {
             @RequestParam("username") String username,
             @RequestParam("password") String password){
     }
-
-
 }
