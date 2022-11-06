@@ -96,11 +96,11 @@ public class OperatorServiceImpl implements OperatorService {
     }
 
     @Override
-    public Operator findByUser(User user) throws Exception {
+    public Operator findByUser(User user) {
         Operator operator = operatorRepository.findByUser(user);
         if (operator != null)
             return operator;
 
-        throw new Exception("Operator not found with user id -> "+user.getId());
+        throw new OperatorNotFoundException("Operator not found with user id -> "+user.getId());
     }
 }
