@@ -41,7 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManagerBean(), tokenService, objectMapper);
-        customAuthenticationFilter.setFilterProcessesUrl("/login");
+        customAuthenticationFilter.setFilterProcessesUrl("/token");
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(STATELESS);
         http.cors().configurationSource(request-> {
@@ -53,7 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         });
         http.authorizeRequests()
                 .antMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                .antMatchers("/login/**", "/token/refresh/**").permitAll()
+                .antMatchers("/token/**", "/token/refresh/**").permitAll()
                 .antMatchers( "/providers/**").hasAnyAuthority("ROLE_ADMIN")
                 .antMatchers( "/operators/**").hasAnyAuthority("ROLE_ADMIN")
                 .antMatchers( "/franchises/**").hasAnyAuthority("ROLE_ADMIN")
