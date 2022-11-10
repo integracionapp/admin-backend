@@ -7,11 +7,14 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.deliverar.admin.exceptions.UsernameAlreadyExistException;
 import com.deliverar.admin.mappers.OperatorMapper;
 import com.deliverar.admin.mappers.UserMapper;
+import com.deliverar.admin.model.dto.Franchise.FranchiseResponse;
 import com.deliverar.admin.model.dto.Operator.OperatorResponse;
 import com.deliverar.admin.model.dto.User.RoleRequest;
 import com.deliverar.admin.model.dto.User.RoleResponse;
 import com.deliverar.admin.model.dto.User.UserRequest;
 import com.deliverar.admin.model.dto.User.UserResponse;
+import com.deliverar.admin.model.entity.Franchise;
+import com.deliverar.admin.model.entity.Operator;
 import com.deliverar.admin.model.entity.Operator;
 import com.deliverar.admin.model.entity.Role;
 import com.deliverar.admin.model.entity.User;
@@ -24,6 +27,7 @@ import com.github.javafaker.Faker;
 import com.deliverar.admin.service.EmailService.EmailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -61,6 +65,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Value("${jwt.secret}")
     private String secret;
 
+
+    @Autowired
+    private OperatorRepository operatorRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -160,6 +167,26 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public void sendEmailChangedPass(String email, String password) {
+        emailService.sendEmail(email,"CONTRASEÑA MODIFICADA CON EXITO","" +
+                "<html>" +
+                "<body>" +
+                "   <h1>Su contraseña fue modificada</h1>" +
+                "   <br>" +
+                "   <h2>Su nueva contraseña es:</h2>" +
+                "   <br> " +
+                "   <p>" +
+                "       Su nueva contraseña es: " +password +
+                "   </p>" +
+                "   <br>" +
+                "<p>" +
+                "Ya se puede loguear y usar los servicios de Deliverar, puede cambiar el usuario y contraseña si lo desea."+
+                "   </p>"+
+                "</body>" +
+                "</html>");
+    }
+
+    @Override
     public User findById(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with id "+ id));
@@ -184,6 +211,21 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         throw new UsernameNotFoundException("User not found with username -> "+ username);
     }
+    @Override
+    public UserResponse changeOperatorPassword(String username) {
+        User user = userRepository.findByUsername(username);
+        Operator operator = operatorRepository.findByUser(user);
+
+        user.setPassword(faker.internet().password());
+        this.sendEmailChangedPass(operator.getEmail(), user.getPassword());
+        userRepository.save(user);
+
+        return userMapper.userToUserResponse(user);
+    }
+
+
+
+
 
     @Override
     public boolean isUsernameAvailable(String username) {

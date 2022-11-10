@@ -61,6 +61,10 @@ public class UserController {
         return ResponseEntity.created(uri).body(userService.saveUser(user));
     }
 
+    @PutMapping("/operators/password/{user}")
+    public ResponseEntity<UserResponse> changeOperatorPassword (@PathVariable String user){
+       return new ResponseEntity<>(userService.changeOperatorPassword(user), HttpStatus.OK);
+    }
     @Hidden
     @GetMapping("/{username}")
     public Boolean isUsernameAvailable(@PathVariable String username){
