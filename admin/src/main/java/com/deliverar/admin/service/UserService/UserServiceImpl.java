@@ -175,9 +175,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 "   <br>" +
                 "   <h2>Su nueva contraseña es:</h2>" +
                 "   <br> " +
-                "   <p>" +
-                "       Su nueva contraseña es: " +password +
-                "   </p>" +
+                "   <h3>" +
+                       password +
+                "   </h3>" +
                 "   <br>" +
                 "<p>" +
                 "Ya se puede loguear y usar los servicios de Deliverar, puede cambiar el usuario y contraseña si lo desea."+
@@ -215,9 +215,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public UserResponse changeOperatorPassword(String username) {
         User user = userRepository.findByUsername(username);
         Operator operator = operatorRepository.findByUser(user);
+        String pass = faker.internet().password();
+        user.setPassword(passwordEncoder.encode(pass));
 
-        user.setPassword(faker.internet().password());
-        this.sendEmailChangedPass(operator.getEmail(), user.getPassword());
+        this.sendEmailChangedPass(operator.getEmail(), pass);
         userRepository.save(user);
 
         return userMapper.userToUserResponse(user);

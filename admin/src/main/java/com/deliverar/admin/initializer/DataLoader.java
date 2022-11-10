@@ -109,6 +109,7 @@ public class DataLoader implements ApplicationRunner {
                 .build();
 
         operatorRepository.save(operator);
+        log.info("Created Operator");
 
     }
 
@@ -126,6 +127,7 @@ public class DataLoader implements ApplicationRunner {
                 .build();
 
         providerRepository.save(provider);
+        log.info("Created Provider");
 
     }
 
