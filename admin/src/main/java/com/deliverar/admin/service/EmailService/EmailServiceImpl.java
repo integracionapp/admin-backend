@@ -21,15 +21,17 @@ public class EmailServiceImpl implements EmailService {
     }
 
     private void sendEmailTool(String email, String subject,String textMessage) {
-        MimeMessage message = sender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message);
-        try {
-            helper.setTo(email);
-            helper.setText(textMessage, true);
-            helper.setSubject(subject);
-            sender.send(message);
-        } catch (MessagingException e) {
-            throw new EmailNotSendException("No se pudo enviar el correo");
-        }
+        new Thread(() -> {
+            MimeMessage message = sender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message);
+            try {
+                helper.setTo(email);
+                helper.setText(textMessage, true);
+                helper.setSubject(subject);
+                sender.send(message);
+            } catch (MessagingException e) {
+                throw new EmailNotSendException("No se pudo enviar el correo");
+            }
+        }).start();
     }
 }
