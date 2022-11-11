@@ -29,6 +29,7 @@ public interface UserService {
 
     OperatorResponse loginOperator(String token) throws Exception;
     UserResponse loginAdmin(String token);
+    UserResponse loginAccountable(String token);
     User findByUsername(String username);
 
     String getUsernameFromToken(String token);

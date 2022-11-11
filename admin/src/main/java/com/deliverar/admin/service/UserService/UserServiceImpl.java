@@ -209,7 +209,18 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 return userMapper.userToUserResponse(user);
 
         throw new UsernameNotFoundException("Admin not found");
+    }
 
+    @Override
+    public UserResponse loginAccountable(String token) {
+        String username = this.getUsernameFromToken(token);
+        User user = this.findByUsername(username);
+        Collection<Role> roles = user.getRoles();
+        for (Role role : roles)
+            if (role.getName().equals("ROLE_ACCOUNTABLE"))
+                return userMapper.userToUserResponse(user);
+
+        throw new UsernameNotFoundException("Accountable not found");
     }
 
     @Override

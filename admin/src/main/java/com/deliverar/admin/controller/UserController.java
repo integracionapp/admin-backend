@@ -65,7 +65,7 @@ public class UserController {
     @Operation(summary = "Login for the operators")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Operator found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = OperatorResponse.class))),
-            @ApiResponse(responseCode = "404", description = "User not found with user id -> x", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))),
+            @ApiResponse(responseCode = "403", description = "Forbidden"),
             @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class)))
     })
     public ResponseEntity<OperatorResponse> loginAdmin(
@@ -79,7 +79,7 @@ public class UserController {
     @Operation(summary = "Login for the administrator")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Administrator found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserResponse.class))),
-            @ApiResponse(responseCode = "404", description = "Administrator not found with user id -> x", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))),
+            @ApiResponse(responseCode = "403", description = "Forbidden"),
             @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class)))
     })
     public ResponseEntity<UserResponse> loginOperator(
@@ -89,15 +89,29 @@ public class UserController {
         return new ResponseEntity<>(userService.loginAdmin(token), HttpStatus.OK);
     }
 
-    //TODO Hacer swagger
+    @GetMapping("/accountable/login")
+    @Operation(summary = "Login for the accountable")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Accountable found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserResponse.class))),
+            @ApiResponse(responseCode = "403", description = "Forbidden"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class)))
+    })
+    public ResponseEntity<UserResponse> loginAccountable(
+            @RequestHeader("Authorization")
+            @Parameter(name = "Authorization", example = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqdWxpYW4iLCJyb2xlcyI6WyJST0xFX09QRVJBVE9SIl0sImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTAwMC9sb2dpbiIsImV4cCI6MTY2Nzc2MjIyOH0.McoxGmXiFC7_zuGaQ1scQUhWokKlNAsahGpJ5km2Cv8")
+            String token) throws Exception {
+        return new ResponseEntity<>(userService.loginAccountable(token), HttpStatus.OK);
+    }
+
+    @Operation(summary = "Forgot Operator password")
     @PutMapping("/operators/password/{user}")
-    public ResponseEntity<UserResponse> changeOperatorPassword (@PathVariable String user){
+    public ResponseEntity<UserResponse> changeOperatorPassword (@Parameter(name = "username") @PathVariable String user){
         return new ResponseEntity<>(userService.forgotOperatorPassword(user), HttpStatus.OK);
     }
 
-    //TODO Hacer swagger
+    @Operation(summary = "Update Operator Password")
     @PutMapping("/operators/password/{user}/{currentPassword}/{newPassword}")
-    public ResponseEntity<UserResponse> updateOperatorPassword (@PathVariable String user, @PathVariable String currentPassword, @PathVariable String newPassword){
+    public ResponseEntity<UserResponse> updateOperatorPassword (@Parameter(name = "username") @PathVariable String user, @PathVariable String currentPassword, @PathVariable String newPassword){
         return new ResponseEntity<>(userService.updateOperatorPassword(user,currentPassword,newPassword), HttpStatus.OK);
     }
 
