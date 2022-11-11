@@ -194,13 +194,22 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public OperatorResponse loginOperator(String token) throws Exception {
-        String cleanToken = token.substring("Bearer ".length());
-        Algorithm algorithm = Algorithm.HMAC256(secret.getBytes());
-        JWTVerifier verifier = JWT.require(algorithm).build();
-        DecodedJWT decodedJWT = verifier.verify(cleanToken);
-        String username = decodedJWT.getSubject();
+        String username = this.getUsernameFromToken(token);
         User user = this.findByUsername(username);
         return operatorMapper.operatorToOperatorResponse(operatorService.findByUser(user));
+    }
+
+    @Override
+    public UserResponse loginAdmin(String token) {
+        String username = this.getUsernameFromToken(token);
+        User user = this.findByUsername(username);
+        Collection<Role> roles = user.getRoles();
+        for (Role role : roles)
+            if (role.getName().equals("ROLE_ADMIN"))
+                return userMapper.userToUserResponse(user);
+
+        throw new UsernameNotFoundException("Admin not found");
+
     }
 
     @Override
@@ -211,6 +220,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         throw new UsernameNotFoundException("User not found with username -> "+ username);
     }
+
+    @Override
+    public String getUsernameFromToken(String token) {
+        String cleanToken = token.substring("Bearer ".length());
+        Algorithm algorithm = Algorithm.HMAC256(secret.getBytes());
+        JWTVerifier verifier = JWT.require(algorithm).build();
+        DecodedJWT decodedJWT = verifier.verify(cleanToken);
+        return decodedJWT.getSubject();
+    }
+
     @Override
     public UserResponse forgotOperatorPassword(String username) {
         User user = userRepository.findByUsername(username);

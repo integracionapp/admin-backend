@@ -4,6 +4,7 @@ import com.deliverar.admin.model.dto.ExceptionResponse;
 import com.deliverar.admin.model.dto.Operator.OperatorResponse;
 import com.deliverar.admin.model.dto.User.UserRequest;
 import com.deliverar.admin.model.dto.User.UserResponse;
+import com.deliverar.admin.model.entity.User;
 import com.deliverar.admin.service.UserService.UserService;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
@@ -67,11 +68,25 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "User not found with user id -> x", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))),
             @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class)))
     })
-    public ResponseEntity<OperatorResponse> loginOperator(
+    public ResponseEntity<OperatorResponse> loginAdmin(
             @RequestHeader("Authorization")
             @Parameter(name = "Authorization", example = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqdWxpYW4iLCJyb2xlcyI6WyJST0xFX09QRVJBVE9SIl0sImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTAwMC9sb2dpbiIsImV4cCI6MTY2Nzc2MjIyOH0.McoxGmXiFC7_zuGaQ1scQUhWokKlNAsahGpJ5km2Cv8")
             String token) throws Exception {
         return new ResponseEntity<>(userService.loginOperator(token), HttpStatus.OK);
+    }
+
+    @GetMapping("/admin/login")
+    @Operation(summary = "Login for the administrator")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Administrator found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserResponse.class))),
+            @ApiResponse(responseCode = "404", description = "Administrator not found with user id -> x", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class)))
+    })
+    public ResponseEntity<UserResponse> loginOperator(
+            @RequestHeader("Authorization")
+            @Parameter(name = "Authorization", example = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqdWxpYW4iLCJyb2xlcyI6WyJST0xFX09QRVJBVE9SIl0sImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTAwMC9sb2dpbiIsImV4cCI6MTY2Nzc2MjIyOH0.McoxGmXiFC7_zuGaQ1scQUhWokKlNAsahGpJ5km2Cv8")
+            String token) throws Exception {
+        return new ResponseEntity<>(userService.loginAdmin(token), HttpStatus.OK);
     }
 
     //TODO Hacer swagger

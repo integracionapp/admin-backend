@@ -28,6 +28,9 @@ public interface UserService {
     User findById(Long id);
 
     OperatorResponse loginOperator(String token) throws Exception;
+    UserResponse loginAdmin(String token);
     User findByUsername(String username);
+
+    String getUsernameFromToken(String token);
 
 }
