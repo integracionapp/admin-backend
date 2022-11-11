@@ -16,7 +16,9 @@ public interface UserService {
     void addRoleToUser(String username, String roleName);
     User getUser(String username);
     List<UserResponse> getUsers();
-    UserResponse changeOperatorPassword(String user);
+    UserResponse forgotOperatorPassword(String user);
+
+    UserResponse updateOperatorPassword(String username, String currentPassword, String newPassword);
 
     UserRequest createUserCredential(String role);
 

@@ -212,7 +212,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         throw new UsernameNotFoundException("User not found with username -> "+ username);
     }
     @Override
-    public UserResponse changeOperatorPassword(String username) {
+    public UserResponse forgotOperatorPassword(String username) {
         User user = userRepository.findByUsername(username);
         Operator operator = operatorRepository.findByUser(user);
         String pass = faker.internet().password();
@@ -224,8 +224,18 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return userMapper.userToUserResponse(user);
     }
 
+    @Override
+    public UserResponse updateOperatorPassword(String username, String currentPassword, String newPassword) {
+        log.info("Updating password for the user -> {}", username);
+        User user = this.findByUsername(username);
+        if (!passwordEncoder.matches(currentPassword,user.getPassword()))
+            throw new UsernameNotFoundException("Unmatched username and password");
 
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
 
+        return userMapper.userToUserResponse(user);
+    }
 
 
     @Override

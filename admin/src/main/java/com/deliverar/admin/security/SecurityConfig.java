@@ -58,6 +58,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers( "/operators/**").hasAnyAuthority("ROLE_ADMIN")
                 .antMatchers( "/franchises/**").hasAnyAuthority("ROLE_ADMIN")
                 .antMatchers(GET,"/users/operators/login").hasAnyAuthority("ROLE_OPERATOR", "ROLE_ADMIN")
+                .antMatchers(PUT,"/users/operators/**/**/**").hasAnyAuthority("ROLE_OPERATOR", "ROLE_ADMIN")
                 .antMatchers("/users/**").hasAnyAuthority("ROLE_ADMIN")
                 .antMatchers("/roles/**").hasAnyAuthority("ROLE_ADMIN")
                 .anyRequest().authenticated();

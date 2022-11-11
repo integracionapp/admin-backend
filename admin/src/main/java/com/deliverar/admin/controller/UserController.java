@@ -1,7 +1,6 @@
 package com.deliverar.admin.controller;
 
 import com.deliverar.admin.model.dto.ExceptionResponse;
-import com.deliverar.admin.model.dto.Franchise.FranchiseResponse;
 import com.deliverar.admin.model.dto.Operator.OperatorResponse;
 import com.deliverar.admin.model.dto.User.UserRequest;
 import com.deliverar.admin.model.dto.User.UserResponse;
@@ -61,9 +60,30 @@ public class UserController {
         return ResponseEntity.created(uri).body(userService.saveUser(user));
     }
 
+    @GetMapping("/operators/login")
+    @Operation(summary = "Login for the operators")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Operator found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = OperatorResponse.class))),
+            @ApiResponse(responseCode = "404", description = "User not found with user id -> x", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class)))
+    })
+    public ResponseEntity<OperatorResponse> loginOperator(
+            @RequestHeader("Authorization")
+            @Parameter(name = "Authorization", example = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqdWxpYW4iLCJyb2xlcyI6WyJST0xFX09QRVJBVE9SIl0sImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTAwMC9sb2dpbiIsImV4cCI6MTY2Nzc2MjIyOH0.McoxGmXiFC7_zuGaQ1scQUhWokKlNAsahGpJ5km2Cv8")
+            String token) throws Exception {
+        return new ResponseEntity<>(userService.loginOperator(token), HttpStatus.OK);
+    }
+
+    //TODO Hacer swagger
     @PutMapping("/operators/password/{user}")
     public ResponseEntity<UserResponse> changeOperatorPassword (@PathVariable String user){
-       return new ResponseEntity<>(userService.changeOperatorPassword(user), HttpStatus.OK);
+        return new ResponseEntity<>(userService.forgotOperatorPassword(user), HttpStatus.OK);
+    }
+
+    //TODO Hacer swagger
+    @PutMapping("/operators/password/{user}/{currentPassword}/{newPassword}")
+    public ResponseEntity<UserResponse> updateOperatorPassword (@PathVariable String user, @PathVariable String currentPassword, @PathVariable String newPassword){
+        return new ResponseEntity<>(userService.updateOperatorPassword(user,currentPassword,newPassword), HttpStatus.OK);
     }
 
     @Hidden
@@ -78,17 +98,5 @@ public class UserController {
         return userService.createUserCredential("ROLE_PROVIDER");
     }
 
-    @GetMapping("/operators/login")
-    @Operation(summary = "Login for the operators")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Operator found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = OperatorResponse.class))),
-            @ApiResponse(responseCode = "404", description = "User not found with user id -> x", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))),
-            @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class)))
-    })
-    public ResponseEntity<OperatorResponse> loginOperator(
-            @RequestHeader("Authorization")
-            @Parameter(name = "Authorization", example = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqdWxpYW4iLCJyb2xlcyI6WyJST0xFX09QRVJBVE9SIl0sImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTAwMC9sb2dpbiIsImV4cCI6MTY2Nzc2MjIyOH0.McoxGmXiFC7_zuGaQ1scQUhWokKlNAsahGpJ5km2Cv8")
-            String token) throws Exception {
-        return new ResponseEntity<>(userService.loginOperator(token), HttpStatus.OK);
-    }
+
 }
