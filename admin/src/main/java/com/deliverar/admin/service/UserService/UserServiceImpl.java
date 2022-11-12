@@ -149,19 +149,26 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         emailService.sendEmail(email,"CUENTA CREADA CON EXITO","" +
                 "<html>" +
                 "<body>" +
-                "   <h1>Bienvenido a Deliverar.</h1>" +
-                "   <br>" +
+                "   <div style='font-family:garamond'>" +
+                "   <h1>¡Bienvenido a Deliver.ar!</h1>" +
                 "   <h2>Su cuenta ha sido creada con exito</h2>" +
+                "<p>"+
+                "Le informamos que su cuenta fue creada exitosamente, sus credenciales son:"+
+                    "<ul>"+
+                        "<li>"+
+                            "<u>Usuario</u>:" + user +
+                        "</li>"+
+                        "<li>" +
+                            "<u>Contraseña</u>:" + password +
+                            "</li> " +
+                    "</ul>"+
+                    "</p>"+
                 "   <br> " +
-                "   <p>" +
-                "       Su usuario es: " +user +
-                "       <br>" +
-                "       Su contraseña es: " + password +
-                "   </p>" +
-                "   <br>" +
-                    "<p>" +
-                        "Ya se puede loguear y usar los servicios de Deliverar, puede cambiar el usuario y contraseña si lo desea."+
-                "   </p>"+
+                                    "<p>" +
+                                    "Ya puede loguearse y usar los servicios de Deliver.ar. También puede cambiar el usuario y contraseña si lo desea." +
+                        "</p>"+
+                "<p><b>-Equipo de Administrador</b></p>" +
+                "   </div>" +
                 "</body>" +
                 "</html>");
     }
@@ -169,21 +176,29 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public void sendEmailChangedPass(String email, String password) {
         emailService.sendEmail(email,"CONTRASEÑA MODIFICADA CON EXITO","" +
-                "<html>" +
-                "<body>" +
-                "   <h1>Su contraseña fue modificada</h1>" +
-                "   <br>" +
-                "   <h2>Su nueva contraseña es:</h2>" +
-                "   <br> " +
-                "   <h3>" +
-                       password +
-                "   </h3>" +
-                "   <br>" +
-                "<p>" +
-                "Ya se puede loguear y usar los servicios de Deliverar, puede cambiar el usuario y contraseña si lo desea."+
-                "   </p>"+
-                "</body>" +
-                "</html>");
+               " <html>" +
+
+                "<body>"+
+    "<div style='font-family:garamond;'>" +
+        "<h1>Deliver.ar</h1>"+
+        "<h2>Su contraseña ha sido modificada</h2>"+
+        "<p>" +
+                "Le informamos que la contraseña de su cuenta fue actualizada exitosamente, su nueva contraseña es:" +
+        "<ul>"+
+           "<li>"+
+                "<u>Contraseña</u>:" + password +
+                "</li>"+
+        "</ul>"+
+        "</p>"+
+        "<p>"+
+                "Ya puede loguearse y usar los servicios de Deliver.ar. También puede cambiar el usuario y contraseña si lo desea." +
+                "</p>" +
+        "<p><b>-Equipo de Administrador</b></p>"+
+    "</div>"+
+
+"</body>"+
+
+"</html>");
     }
 
     @Override
