@@ -8,7 +8,7 @@ import com.deliverar.admin.model.dto.Franchise.FranchiseResponse;
 import com.deliverar.admin.model.dto.Franchise.FranchiseUpdateRequest;
 import com.deliverar.admin.model.entity.Franchise;
 import com.deliverar.admin.repository.FranchiseRepository;
-import com.deliverar.admin.service.FranchiseService.FranchiseService;
+import com.deliverar.admin.service.OperatorService.FranchiseService.FranchiseService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -63,9 +63,13 @@ public class OperatorController {
     public ResponseEntity<List<OperatorResponse>> getAllOperators() {
         return new ResponseEntity<>(operatorService.getAllOperators(), HttpStatus.OK);
     }
-    @GetMapping("/find/{name}") //TODO Cambiar esto por /name/{name}
+    @GetMapping("/name/{name}") //TODO Cambiar esto por /name/{name}
     @Operation(summary = "Get Operators by their last name", description = "Get Operators by last name")
     public ResponseEntity<List<OperatorResponse>> getOperatorsByLastName(@PathVariable String name){
         return new ResponseEntity<>(operatorService.getOperatorsByLastName(name),HttpStatus.OK);
     }
+
+
+
+    //Olvide contraseña
 }

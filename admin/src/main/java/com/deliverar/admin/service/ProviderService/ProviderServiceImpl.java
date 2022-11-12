@@ -7,6 +7,7 @@ import com.deliverar.admin.model.dto.Provider.ProviderResponse;
 import com.deliverar.admin.model.dto.Provider.ProviderUpdateRequest;
 import com.deliverar.admin.model.entity.Provider;
 import com.deliverar.admin.repository.ProviderRepository;
+import com.deliverar.admin.service.EmailService.EmailService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,12 +27,36 @@ public class ProviderServiceImpl implements ProviderService {
 
     private final ProviderMapper providerMapper = ProviderMapper.INSTANCE;
 
+    @Autowired
+    private EmailService emailService;
+
     @Override
     public ProviderResponse saveNewProvider(ProviderRequest p) {
         log.info("Saving new Provider");
         Provider provider = providerMapper.providerRequestToProvider(p);
         provider = providerRepository.save(provider);
         log.info("New provider was saved successfully");
+
+        emailService.sendEmail("julipro99@gmail.com","PROVEDOR CREADO CON EXITO","" +
+                "<html>" +
+                "<body>" +
+                "   <div style='font-family:garamond'>" +
+                "   <h1>¡Proveedor creado con exito!</h1>" +
+                "   <h2>¡Proveedor creado con exito!</h2>" +
+                "<p>"+
+                "Se creo exitosamente el provedor"+
+                "<ul>"+
+                "<li>"+
+                "<u>Nombre</u>:" + provider.getBusinessName() +
+                "</li>"+
+                "</ul>"+
+                "</p>"+
+                "   <br> " +
+                "<p><b>-Equipo de Administrador</b></p>" +
+                "   </div>" +
+                "</body>" +
+                "</html>");
+
 
         return providerMapper.providerToProviderResponse(provider);
     }

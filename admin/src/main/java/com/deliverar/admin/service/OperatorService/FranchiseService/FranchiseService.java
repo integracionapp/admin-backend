@@ -1,4 +1,4 @@
-package com.deliverar.admin.service.FranchiseService;
+package com.deliverar.admin.service.OperatorService.FranchiseService;
 
 import com.deliverar.admin.exceptions.FranchiseNotFoundException;
 import com.deliverar.admin.model.dto.Franchise.FranchiseRequest;

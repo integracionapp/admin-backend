@@ -41,7 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManagerBean(), tokenService, objectMapper);
-        customAuthenticationFilter.setFilterProcessesUrl("/login");
+        customAuthenticationFilter.setFilterProcessesUrl("/token");
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(STATELESS);
         http.cors().configurationSource(request-> {
@@ -53,27 +53,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         });
         http.authorizeRequests()
                 .antMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                .antMatchers("/login/**", "/token/refresh/**").permitAll()
-
-                //Providers
-                .antMatchers(GET, "/providers/**").hasAnyAuthority("ROLE_PROVIDER", "ROLE_ADMIN")
-                .antMatchers(POST, "/providers/**").hasAnyAuthority("ROLE_ADMIN")
-                .antMatchers(PUT, "/providers/**").hasAnyAuthority("ROLE_ADMIN")
-                .antMatchers(DELETE, "/providers/**").hasAnyAuthority("ROLE_ADMIN")
-
-                //Operators
-                .antMatchers(GET, "/operators/**").hasAnyAuthority("ROLE_OPERATOR", "ROLE_ADMIN")
-                .antMatchers(POST, "/operators/**").hasAnyAuthority("ROLE_ADMIN")
-                .antMatchers(PUT, "/operators/**").hasAnyAuthority("ROLE_ADMIN")
-                .antMatchers(DELETE, "/operators/**").hasAnyAuthority("ROLE_ADMIN")
-
-                //Franchises
-                .antMatchers(GET, "/franchises/**").hasAnyAuthority("ROLE_FRANCHISE", "ROLE_ADMIN")
-                .antMatchers(POST, "/franchises/**").hasAnyAuthority("ROLE_ADMIN")
-                .antMatchers(PUT, "/franchises/**").hasAnyAuthority("ROLE_ADMIN")
-                .antMatchers(DELETE, "/franchises/**").hasAnyAuthority("ROLE_ADMIN")
-
-                //Users
+                .antMatchers("/token/**", "/token/refresh/**", "/users/operators/password/**").permitAll()
+                .antMatchers( "/providers/**").hasAnyAuthority("ROLE_ADMIN")
+                .antMatchers( "/operators/**").hasAnyAuthority("ROLE_ADMIN")
+                .antMatchers( "/franchises/**").hasAnyAuthority("ROLE_ADMIN")
+                .antMatchers(GET,"/users/accountable/login").hasAnyAuthority("ROLE_ACCOUNTABLE", "ROLE_ADMIN")
+                .antMatchers(GET,"/users/operators/login").hasAnyAuthority("ROLE_OPERATOR", "ROLE_ADMIN")
+                .antMatchers(PUT,"/users/operators/**/**/**").hasAnyAuthority("ROLE_OPERATOR", "ROLE_ADMIN")
                 .antMatchers("/users/**").hasAnyAuthority("ROLE_ADMIN")
                 .antMatchers("/roles/**").hasAnyAuthority("ROLE_ADMIN")
                 .anyRequest().authenticated();

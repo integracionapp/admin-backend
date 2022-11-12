@@ -21,7 +21,4 @@ public class Provider {
     @JoinColumn(name = "provider_id")
     private List<Address> address;
     private String webPageUrl;
-
-
-
 }

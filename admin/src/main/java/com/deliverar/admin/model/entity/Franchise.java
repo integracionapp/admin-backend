@@ -23,7 +23,4 @@ public class Franchise {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "franchise_id")
     private List<Address> address;
-
-
-
 }
