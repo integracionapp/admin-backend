@@ -42,7 +42,6 @@ public class ProviderServiceImpl implements ProviderService {
                 "<body>" +
                 "   <div style='font-family:garamond'>" +
                 "   <h1>¡Proveedor creado con exito!</h1>" +
-                "   <h2>¡Proveedor creado con exito!</h2>" +
                 "<p>"+
                 "Se creo exitosamente el provedor"+
                 "<ul>"+
