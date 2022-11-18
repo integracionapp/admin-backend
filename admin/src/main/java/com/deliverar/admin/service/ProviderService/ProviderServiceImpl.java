@@ -37,12 +37,11 @@ public class ProviderServiceImpl implements ProviderService {
         provider = providerRepository.save(provider);
         log.info("New provider was saved successfully");
 
-        emailService.sendEmail("julipro99@gmail.com","PROVEDOR CREADO CON EXITO","" +
+        emailService.sendEmail("proveedordeliverar@gmail.com","PROVEDOR CREADO CON EXITO","" +
                 "<html>" +
                 "<body>" +
                 "   <div style='font-family:garamond'>" +
                 "   <h1>¡Proveedor creado con exito!</h1>" +
-                "   <h2>¡Proveedor creado con exito!</h2>" +
                 "<p>"+
                 "Se creo exitosamente el provedor"+
                 "<ul>"+

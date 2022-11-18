@@ -152,14 +152,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 "   <div style='font-family:garamond'>" +
                 "   <h1>¡Bienvenido a Deliver.ar!</h1>" +
                 "   <h2>Su cuenta ha sido creada con exito</h2>" +
-                "<p>"+
+                "<h3>"+
                 "Le informamos que su cuenta fue creada exitosamente, sus credenciales son:"+
+                "</h3>" +
                     "<ul>"+
                         "<li>"+
-                            "<u>Usuario</u>:" + user +
+                            "<h3><u>Usuario</u>: " + user +"</h3>"+
                         "</li>"+
                         "<li>" +
-                            "<u>Contraseña</u>:" + password +
+                            "<h3><u>Contraseña</u>: " + password +"</h3>"+
                             "</li> " +
                     "</ul>"+
                     "</p>"+
@@ -182,14 +183,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     "<div style='font-family:garamond;'>" +
         "<h1>Deliver.ar</h1>"+
         "<h2>Su contraseña ha sido modificada</h2>"+
-        "<p>" +
+        "<h3>" +
                 "Le informamos que la contraseña de su cuenta fue actualizada exitosamente, su nueva contraseña es:" +
+                "</h3>"+
         "<ul>"+
            "<li>"+
-                "<u>Contraseña</u>:" + password +
+                "<h3><u>Contraseña</u>:" + password +"</h3>"+
                 "</li>"+
         "</ul>"+
-        "</p>"+
         "<p>"+
                 "Ya puede loguearse y usar los servicios de Deliver.ar. También puede cambiar el usuario y contraseña si lo desea." +
                 "</p>" +
