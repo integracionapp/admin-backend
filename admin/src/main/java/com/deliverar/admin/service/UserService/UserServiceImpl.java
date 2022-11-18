@@ -152,14 +152,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 "   <div style='font-family:garamond'>" +
                 "   <h1>¡Bienvenido a Deliver.ar!</h1>" +
                 "   <h2>Su cuenta ha sido creada con exito</h2>" +
-                "<p>"+
+                "<h3>"+
                 "Le informamos que su cuenta fue creada exitosamente, sus credenciales son:"+
+                "</h3>" +
                     "<ul>"+
                         "<li>"+
-                            "<u>Usuario</u>:" + user +
+                            "<h3><u>Usuario</u>: " + user +"</h3>"+
                         "</li>"+
                         "<li>" +
-                            "<u>Contraseña</u>:" + password +
+                            "<h3><u>Contraseña</u>: " + password +"</h3>"+
                             "</li> " +
                     "</ul>"+
                     "</p>"+
