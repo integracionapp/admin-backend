@@ -29,10 +29,7 @@ public class FranchiseServiceImpl implements FranchiseService{
         Franchise franchise = franchiseMapper.franchiseRequestToFranchise(f);
         franchise = franchiseRepository.save(franchise);
         return franchiseMapper.franchiseToFranchiseResponse(franchise);
-
-
     }
-
 
 
     @Override

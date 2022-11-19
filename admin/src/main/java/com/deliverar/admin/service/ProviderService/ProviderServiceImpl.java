@@ -2,19 +2,18 @@ package com.deliverar.admin.service.ProviderService;
 
 import com.deliverar.admin.exceptions.ProviderNotFoundException;
 import com.deliverar.admin.mappers.ProviderMapper;
+import com.deliverar.admin.model.dto.Message.ProviderMessage;
 import com.deliverar.admin.model.dto.Provider.ProviderRequest;
 import com.deliverar.admin.model.dto.Provider.ProviderResponse;
 import com.deliverar.admin.model.dto.Provider.ProviderUpdateRequest;
 import com.deliverar.admin.model.entity.Provider;
 import com.deliverar.admin.repository.ProviderRepository;
 import com.deliverar.admin.service.EmailService.EmailService;
+import com.deliverar.admin.service.MessageService.MessageService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.SQLException;
 import java.util.List;
 
 @Service
@@ -24,6 +23,9 @@ public class ProviderServiceImpl implements ProviderService {
 
     @Autowired
     private ProviderRepository providerRepository;
+
+    @Autowired
+    private MessageService messageService;
 
     private final ProviderMapper providerMapper = ProviderMapper.INSTANCE;
 
@@ -56,6 +58,16 @@ public class ProviderServiceImpl implements ProviderService {
                 "</body>" +
                 "</html>");
 
+        ProviderMessage message = ProviderMessage.builder()
+                .tipo("crearProveedor")
+                .tipoDocumento("CUIT")
+                .numeroDocumento(String.valueOf(provider.getCuit()))
+                .razonSocial(provider.getBusinessName())
+                .domicilio(provider.getAddress().get(0).getStreet() + " " + provider.getAddress().get(0).getNumber())
+                .telefono(provider.getPhone())
+                .correoElectronico(provider.getEmail())
+                .build();
+        messageService.sendMessageToQueue(message, "administrador");
 
         return providerMapper.providerToProviderResponse(provider);
     }

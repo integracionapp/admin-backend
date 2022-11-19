@@ -2,20 +2,21 @@ package com.deliverar.admin.service.OperatorService;
 
 import com.deliverar.admin.exceptions.OperatorNotFoundException;
 import com.deliverar.admin.mappers.OperatorMapper;
+import com.deliverar.admin.model.dto.Message.OperatorMessage;
 import com.deliverar.admin.model.dto.Operator.OperatorRequest;
 import com.deliverar.admin.model.dto.Operator.OperatorResponse;
 import com.deliverar.admin.model.dto.Operator.OperatorUpdateRequest;
+import com.deliverar.admin.model.dto.Message.ProviderMessage;
 import com.deliverar.admin.model.dto.User.UserRequest;
 import com.deliverar.admin.model.dto.User.UserResponse;
 import com.deliverar.admin.model.entity.Operator;
 import com.deliverar.admin.model.entity.User;
 import com.deliverar.admin.repository.OperatorRepository;
-import com.deliverar.admin.service.EmailService.EmailService;
+import com.deliverar.admin.service.MessageService.MessageService;
 import com.deliverar.admin.service.UserService.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,6 +32,9 @@ public class OperatorServiceImpl implements OperatorService {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private MessageService messageService;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
@@ -50,6 +54,19 @@ public class OperatorServiceImpl implements OperatorService {
         log.info("New operator was saved succesfully");
 
         userService.sendEmail(operator.getEmail(), userRequest.getPassword(), user.getUsername());
+
+        OperatorMessage message = OperatorMessage.builder()
+                .tipo("crearOperador")
+                .nombre(operator.getFirstName())
+                .apellido(operator.getLastName())
+                .numeroDocumento(String.valueOf(operator.getDni()))
+                .telefono(operator.getPhone())
+                .email(operator.getEmail())
+                .domicilio(operator.getAddresses().get(0).getStreet() + " " + operator.getAddresses().get(0).getCity())
+                .username(userRequest.getUsername())
+                .password(userRequest.getPassword())
+                .build();
+        messageService.sendMessageToQueue(message, "administrador");
 
         return operatorMapper.operatorToOperatorResponse(operator);
     }
