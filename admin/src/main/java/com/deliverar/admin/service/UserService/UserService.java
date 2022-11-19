@@ -33,5 +33,5 @@ public interface UserService {
     User findByUsername(String username);
 
     String getUsernameFromToken(String token);
-
+    List<UserResponse> getUsersByRole(String role);
 }
