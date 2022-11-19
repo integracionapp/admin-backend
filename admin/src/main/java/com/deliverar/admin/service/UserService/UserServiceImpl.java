@@ -7,27 +7,24 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.deliverar.admin.exceptions.UsernameAlreadyExistException;
 import com.deliverar.admin.mappers.OperatorMapper;
 import com.deliverar.admin.mappers.UserMapper;
-import com.deliverar.admin.model.dto.Franchise.FranchiseResponse;
+import com.deliverar.admin.model.dto.Message.AccountableMessage;
 import com.deliverar.admin.model.dto.Operator.OperatorResponse;
 import com.deliverar.admin.model.dto.User.RoleRequest;
 import com.deliverar.admin.model.dto.User.RoleResponse;
 import com.deliverar.admin.model.dto.User.UserRequest;
 import com.deliverar.admin.model.dto.User.UserResponse;
-import com.deliverar.admin.model.entity.Franchise;
-import com.deliverar.admin.model.entity.Operator;
 import com.deliverar.admin.model.entity.Operator;
 import com.deliverar.admin.model.entity.Role;
 import com.deliverar.admin.model.entity.User;
 import com.deliverar.admin.repository.OperatorRepository;
 import com.deliverar.admin.repository.RoleRepository;
 import com.deliverar.admin.repository.UserRepository;
+import com.deliverar.admin.service.MessageService.MessageService;
 import com.deliverar.admin.service.OperatorService.OperatorService;
-import com.deliverar.admin.service.TokenService.TokenService;
 import com.github.javafaker.Faker;
 import com.deliverar.admin.service.EmailService.EmailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -60,6 +57,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Autowired
     private OperatorService operatorService;
 
+    @Autowired
+    private MessageService messageService;
+
     private final OperatorMapper operatorMapper = OperatorMapper.INSTANCE;
 
     @Value("${jwt.secret}")
@@ -89,12 +89,27 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public UserResponse saveUser(UserRequest userRequest) {
         log.info("Saving new user {} to the database", userRequest.getName());
         User user = userMapper.userRequestToUser(userRequest);
+        boolean isAccountable = false;
         Role role;
         for (String roleName : userRequest.getRoles()){
+            if (roleName.compareTo("ROLE_ACCOUNTABLE") == 0)
+                isAccountable = true;
+
             role = roleRepository.findByName(roleName);
             user.getRoles().add(role);
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        if (isAccountable){
+            AccountableMessage message = AccountableMessage.builder()
+                    .tipo("crearContable")
+                    .nombre(user.getName())
+                    .username(user.getUsername())
+                    .password(userRequest.getPassword())
+                    .build();
+            messageService.sendMessageToQueue(message, "administrador");
+        }
+
         return userMapper.userToUserResponse(userRepository.save(user));
     }
 

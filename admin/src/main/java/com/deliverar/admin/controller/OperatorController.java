@@ -68,8 +68,4 @@ public class OperatorController {
     public ResponseEntity<List<OperatorResponse>> getOperatorsByLastName(@PathVariable String name){
         return new ResponseEntity<>(operatorService.getOperatorsByLastName(name),HttpStatus.OK);
     }
-
-
-
-    //Olvide contraseña
 }
