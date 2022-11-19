@@ -291,4 +291,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         throw new UsernameAlreadyExistException("We have a user with username: "+username);
     }
+
+    @Override
+    public List<UserResponse> getUsersByRole(String role) {
+        log.info("Getting all users with role = ".concat(role));
+        Role roleAux = roleRepository.findByName(role);
+        List<User> users = userRepository.findByRoles(roleAux);
+        return userMapper.userToUserResponse(users);
+    }
 }
