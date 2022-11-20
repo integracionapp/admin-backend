@@ -10,8 +10,10 @@ import com.deliverar.admin.service.UserService.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import java.math.BigInteger;
@@ -33,26 +35,33 @@ public class DataLoader implements ApplicationRunner {
     @Autowired
     private FranchiseRepository franchiseRepository;
 
+    @Value("${spring.jpa.hibernate.ddl-auto}")
+    private String ddl;
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        userService.saveRole(new RoleRequest("ROLE_ADMIN"));
-        userService.saveRole(new RoleRequest( "ROLE_PROVIDER"));
-        userService.saveRole(new RoleRequest( "ROLE_FRANCHISE"));
-        userService.saveRole(new RoleRequest( "ROLE_OPERATOR"));
-        userService.saveRole(new RoleRequest("ROLE_ACCOUNTABLE"));
+        if (ddl.compareTo("create") == 0){
+            userService.saveRole(new RoleRequest("ROLE_ADMIN"));
+            userService.saveRole(new RoleRequest( "ROLE_PROVIDER"));
+            userService.saveRole(new RoleRequest( "ROLE_FRANCHISE"));
+            userService.saveRole(new RoleRequest( "ROLE_OPERATOR"));
+            userService.saveRole(new RoleRequest("ROLE_ACCOUNTABLE"));
 
-        userService.saveUser(new UserRequest("Gonzalo Bari", "gnb", "1234", new ArrayList<>()));
-        userService.saveUser(new UserRequest( "Franco Siciliano", "sicilian", "1234", new ArrayList<>()));
-        userService.saveUser(new UserRequest("Gonzalo Juliano", "julian", "1234", new ArrayList<>()));
-        userService.saveUser(new UserRequest("Juan Iviglia", "pampa", "1234", new ArrayList<>()));
+            userService.saveUser(new UserRequest("Gonzalo Bari", "gnb", "1234", new ArrayList<>()));
+            userService.saveUser(new UserRequest( "Franco Siciliano", "sicilian", "1234", new ArrayList<>()));
+            userService.saveUser(new UserRequest("Gonzalo Juliano", "julian", "1234", new ArrayList<>()));
+            userService.saveUser(new UserRequest("Juan Iviglia", "pampa", "1234", new ArrayList<>()));
 
-        userService.addRoleToUser("gnb", "ROLE_ADMIN");
-        userService.addRoleToUser("sicilian", "ROLE_PROVIDER");
-        userService.addRoleToUser("julian", "ROLE_OPERATOR");
-        userService.addRoleToUser("pampa", "ROLE_ACCOUNTABLE");
+            userService.addRoleToUser("gnb", "ROLE_ADMIN");
+            userService.addRoleToUser("sicilian", "ROLE_PROVIDER");
+            userService.addRoleToUser("julian", "ROLE_OPERATOR");
+            userService.addRoleToUser("pampa", "ROLE_ACCOUNTABLE");
 
-        providerDataLoader();
-        operatorDataLoader();
+            providerDataLoader();
+            operatorDataLoader();
+            franchiseDataLoader();
+        }
+
     }
 
     private void operatorDataLoader(){
