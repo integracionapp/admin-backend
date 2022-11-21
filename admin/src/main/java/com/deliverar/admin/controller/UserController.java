@@ -46,7 +46,7 @@ public class UserController {
         return ResponseEntity.ok().body(userService.getUsers());
     }
 
-    @GetMapping("/roles")
+    @GetMapping("/roles/{name}")
     @Operation(summary = "Get all users with a specific role")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Users found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserResponse.class))),
@@ -57,9 +57,9 @@ public class UserController {
             @RequestHeader("Authorization")
             @Parameter(name = "Authorization", example = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqdWxpYW4iLCJyb2xlcyI6WyJST0xFX09QRVJBVE9SIl0sImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTAwMC9sb2dpbiIsImV4cCI6MTY2Nzc2MjIyOH0.McoxGmXiFC7_zuGaQ1scQUhWokKlNAsahGpJ5km2Cv8")
             String token,
-            @RequestBody RoleRequest role
+            @PathVariable String name
     ) {
-        return ResponseEntity.ok().body(userService.getUsersByRole(role.getName().toUpperCase()));
+        return ResponseEntity.ok().body(userService.getUsersByRole(name.toUpperCase()));
     }
 
     @PostMapping("/")
